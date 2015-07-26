@@ -11,7 +11,7 @@
 
 	<description>
         <![CDATA[
-        	The project has the objective of being a service's integration utility. Assimbling the API of different organizations it allows the user to simply access them.
+        	The project has the objective of being a service's integration utility. Assembling the API of different organizations it allows the user to simply access them.
         ]]>
     </description>
 
@@ -38,8 +38,9 @@
 
 		<!-- dependency versions -->
 		<javaee-api.version>7.0</javaee-api.version>
-		<org.glassfish.javax.faces.version>2.2.8</org.glassfish.javax.faces.version>
 		<junit.version>3.8.1</junit.version>
+		<org.glassfish.javax.faces.version>2.2.8</org.glassfish.javax.faces.version>
+		<org.richfaces.version>4.5.0.Final</org.richfaces.version>
 	</properties>
 
 	<inceptionYear>2014</inceptionYear>
@@ -53,6 +54,13 @@
 				<groupId>org.glassfish</groupId>
 				<artifactId>javax.faces</artifactId>
 				<version>${org.glassfish.javax.faces.version}</version>
+			</dependency>
+
+			<!-- RichFaces -->
+			<dependency>
+				<groupId>org.richfaces</groupId>
+				<artifactId>richfaces</artifactId>
+				<version>${org.richfaces.version}</version>
 			</dependency>
 
 			<!-- Common -->
