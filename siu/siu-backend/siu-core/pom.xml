@@ -11,6 +11,8 @@
 	<artifactId>siu-core</artifactId>
 	<name>SIU - BE - Core</name>
 
+    <packaging>ejb</packaging>
+
     <dependencies>
         <dependency>
             <groupId>javax</groupId>

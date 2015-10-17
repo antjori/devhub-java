@@ -11,7 +11,7 @@
 
 	<description>
         <![CDATA[
-        	The project has the objective of being a service's integration utility. Assembling the API of different organizations it allows the user to simply access them.
+        	The project has the objective of being a service's integration utility. Assembling the API of different organizations, it allows the user to simply access them.
         ]]>
     </description>
 
@@ -29,18 +29,27 @@
 	<properties>
 		<!-- encoding -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
 		<!-- Java version -->
-		<java-version>1.8</java-version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
 
 		<!-- plugin versions -->
-		<maven-war-plugin.version>2.4</maven-war-plugin.version>
-		<maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
+		<maven-assembly-plugin.version>2.6</maven-assembly-plugin.version>
+		<maven-clean-plugin.version>2.6.1</maven-clean-plugin.version>
+		<maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
+		<maven-dependency-plugin.version>2.10</maven-dependency-plugin.version>
+		<maven-ear-plugin.version>2.10.1</maven-ear-plugin.version>
+		<maven-ejb-plugin.version>2.5.1</maven-ejb-plugin.version>
+		<maven-install-plugin.version>2.5.2</maven-install-plugin.version>
+		<maven-jar-plugin.version>2.6</maven-jar-plugin.version>
+		<maven-war-plugin.version>2.6</maven-war-plugin.version>
 
 		<!-- dependency versions -->
 		<javaee-api.version>7.0</javaee-api.version>
-		<junit.version>3.8.1</junit.version>
-		<org.glassfish.javax.faces.version>2.2.8</org.glassfish.javax.faces.version>
-		<org.richfaces.version>4.5.0.Final</org.richfaces.version>
+		<junit.version>4.12</junit.version>
+		<org.glassfish.javax.faces.version>2.2.12</org.glassfish.javax.faces.version>
+		<org.richfaces.version>4.5.10.Final</org.richfaces.version>
 	</properties>
 
 	<inceptionYear>2014</inceptionYear>
@@ -83,23 +92,84 @@
 	<build>
 		<pluginManagement>
 			<plugins>
+				<!-- clean plugin -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>${maven-clean-plugin.version}</version>
+				</plugin>
+
 				<!-- compiler plugin -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>${maven-compiler-plugin.version}</version>
 					<configuration>
-						<source>${java-version}</source>
-						<target>${java-version}</target>
+						<source>${maven.compiler.source}</source>
+						<target>${maven.compiler.target}</target>
 						<encoding>${project.build.sourceEncoding}</encoding>
 					</configuration>
 				</plugin>
 
+				<!-- install plugin -->
 				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-install-plugin</artifactId>
+					<version>${maven-install-plugin.version}</version>
+				</plugin>
+
+				<!-- ejb plugin -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-ejb-plugin</artifactId>
+					<version>${maven-ejb-plugin.version}</version>
+					<configuration>
+						<ejbVersion>3.2</ejbVersion>
+					</configuration>
+				</plugin>
+
+				<!-- jar plugin -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>${maven-jar-plugin.version}</version>
+				</plugin>
+
+				<!-- war plugin -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-war-plugin</artifactId>
 					<version>${maven-war-plugin.version}</version>
 				</plugin>
+
+				<!-- ear plugin -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-ear-plugin</artifactId>
+					<version>${maven-ear-plugin.version}</version>
+				</plugin>
+
+				<!-- assembly plugin -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>${maven-assembly-plugin.version}</version>
+				</plugin>
+
+				<!-- dependency plugin -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<version>${maven-dependency-plugin.version}</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+		</plugins>
 	</build>
 </project>

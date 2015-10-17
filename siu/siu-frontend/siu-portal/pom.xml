@@ -30,6 +30,7 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>siu-core</artifactId>
             <version>${project.version}</version>
+            <type>ejb</type>
         </dependency>
 	</dependencies>
 
