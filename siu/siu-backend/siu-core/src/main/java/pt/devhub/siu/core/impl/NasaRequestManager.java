@@ -14,8 +14,7 @@ public class NasaRequestManager implements RequestManager {
 
 	@Override
 	public void processRequest() {
-		// TODO Auto-generated method stub
-
+		System.out.println("Received a request to send to NASA...");
 	}
 
 }

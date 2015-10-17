@@ -16,6 +16,7 @@ public class NasaServiceProcessor implements ServiceProcessor {
 	@Override
 	public void processRequest() {
 		System.out.println("Processing service request...");
+		requestManager.processRequest();
 	}
 
 }
