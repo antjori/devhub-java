@@ -13,4 +13,8 @@ import javax.inject.Qualifier;
 public @interface ServiceEntity {
 
 	ServiceEntityType value();
+
+	public enum ServiceEntityType {
+		NASA;
+	}
 }

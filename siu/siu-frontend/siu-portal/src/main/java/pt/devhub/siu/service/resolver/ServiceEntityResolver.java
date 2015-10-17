@@ -7,6 +7,7 @@ import javax.enterprise.inject.Produces;
 
 import pt.devhub.siu.service.ServiceProcessor;
 import pt.devhub.siu.service.impl.NasaServiceProcessor;
+import pt.devhub.siu.service.resolver.ServiceEntity.ServiceEntityType;
 
 @SessionScoped
 public class ServiceEntityResolver implements Serializable {

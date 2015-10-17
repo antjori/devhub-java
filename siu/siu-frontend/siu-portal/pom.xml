@@ -24,6 +24,13 @@
 			<groupId>org.glassfish</groupId>
 			<artifactId>javax.faces</artifactId>
 		</dependency>
+
+        <!-- compile -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>siu-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 	</dependencies>
 
 	<build>

@@ -6,7 +6,7 @@ import javax.inject.Named;
 
 import pt.devhub.siu.service.ServiceProcessor;
 import pt.devhub.siu.service.resolver.ServiceEntity;
-import pt.devhub.siu.service.resolver.ServiceEntityType;
+import pt.devhub.siu.service.resolver.ServiceEntity.ServiceEntityType;
 
 @Named
 @ViewScoped
