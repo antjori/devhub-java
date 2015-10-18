@@ -1,5 +1,7 @@
 package pt.devhub.siu.portal;
 
+import java.io.Serializable;
+
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -10,7 +12,12 @@ import pt.devhub.siu.service.resolver.ServiceEntity.ServiceEntityType;
 
 @Named
 @ViewScoped
-public class MainPortalController {
+public class MainPortalController implements Serializable {
+
+	/**
+	 * The serial version unique identifier.
+	 */
+	private static final long serialVersionUID = -437405400901656510L;
 
 	// Injection of the NASA service processor
 	@Inject
