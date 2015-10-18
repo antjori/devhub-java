@@ -19,8 +19,8 @@ public class ServiceEntityResolver implements Serializable {
 
 	@Produces
 	@ServiceEntity(ServiceEntityType.NASA)
-	public ServiceProcessor getNasaServiceProcessor() {
-		return new NasaServiceProcessor();
+	public ServiceProcessor getNasaServiceProcessor(NasaServiceProcessor nasaServiceProcessor) {
+		return nasaServiceProcessor;
 	}
-	
+
 }

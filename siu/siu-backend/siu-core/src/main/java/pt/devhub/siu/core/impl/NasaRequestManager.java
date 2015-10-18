@@ -4,7 +4,7 @@ import javax.ejb.Stateless;
 
 import pt.devhub.siu.core.RequestManager;
 
-@Stateless(mappedName = "NasaRequestManager")
+@Stateless
 public class NasaRequestManager implements RequestManager {
 
 	/**
@@ -14,7 +14,7 @@ public class NasaRequestManager implements RequestManager {
 
 	@Override
 	public void processRequest() {
-		System.out.println("Received a request to send to NASA...");
+		System.out.println("@NasaRequestManager: Received a request to send to NASA...");
 	}
 
 }

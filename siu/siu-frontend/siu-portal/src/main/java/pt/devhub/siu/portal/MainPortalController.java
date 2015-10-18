@@ -2,6 +2,7 @@ package pt.devhub.siu.portal;
 
 import java.io.Serializable;
 
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -24,5 +25,15 @@ public class MainPortalController implements Serializable {
 	@ServiceEntity(ServiceEntityType.NASA)
 	private ServiceProcessor serviceProcessor;
 
-	
+	public MainPortalController() {
+	}
+
+	@PostConstruct
+	public void init() {
+		serviceProcessor.processRequest();
+	}
+
+	public String getDummyText() {
+		return "dummy text";
+	}
 }
