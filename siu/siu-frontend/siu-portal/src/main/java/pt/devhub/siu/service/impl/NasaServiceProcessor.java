@@ -6,6 +6,9 @@ import javax.ejb.EJB;
 import javax.faces.bean.RequestScoped;
 import javax.inject.Named;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import pt.devhub.siu.core.RequestManager;
 import pt.devhub.siu.service.ServiceProcessor;
 
@@ -18,12 +21,15 @@ public class NasaServiceProcessor implements ServiceProcessor, Serializable {
 	 */
 	private static final long serialVersionUID = -8803742285875290016L;
 
+	// Default logger
+	private static final Logger logger = LoggerFactory.getLogger(NasaServiceProcessor.class);
+
 	@EJB(beanName = "NasaRequestManager")
 	private RequestManager requestManager;
 
 	@Override
 	public void processRequest() {
-		System.out.println("@NasaServiceProcessor: Processing service request...");
+		logger.info("Processing service request...");
 		requestManager.processRequest();
 	}
 

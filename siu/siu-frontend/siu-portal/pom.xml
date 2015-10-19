@@ -20,18 +20,35 @@
 			<groupId>javax</groupId>
 			<artifactId>javaee-api</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.glassfish</groupId>
 			<artifactId>javax.faces</artifactId>
 		</dependency>
 
-        <!-- compile -->
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>siu-core</artifactId>
-            <version>${project.version}</version>
-            <type>ejb</type>
-        </dependency>
+		<!-- logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>			
+		</dependency>
+
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+		</dependency>
+
+		<!-- compile -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>siu-core</artifactId>
+			<version>${project.version}</version>
+			<type>ejb</type>
+		</dependency>
 	</dependencies>
 
 	<build>
