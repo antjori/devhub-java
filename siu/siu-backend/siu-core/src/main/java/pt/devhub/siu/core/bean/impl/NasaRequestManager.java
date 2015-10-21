@@ -2,6 +2,9 @@ package pt.devhub.siu.core.bean.impl;
 
 import javax.ejb.Stateless;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import pt.devhub.siu.core.bean.RequestManager;
 import us.monoid.web.JSONResource;
 import us.monoid.web.Resty;
@@ -14,26 +17,31 @@ public class NasaRequestManager implements RequestManager {
 	 */
 	private static final long serialVersionUID = -4885032369456830806L;
 
+	private static final Logger logger = LoggerFactory.getLogger(NasaRequestManager.class);
+
+	// NASA A.P.O.D. request
 	private static final String APOD_REQUEST = "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY";
 
 	@Override
 	public void processRequest() {
-		System.out.println("@NasaRequestManager: Received a request and forwarding it to NASA...");
+		logger.info("Received a request and forwarding it to NASA");
+
 		Resty resty = new Resty();
 		JSONResource jsonResource = null;
+
 		try {
 			jsonResource = resty.json(APOD_REQUEST);
 			if (jsonResource != null) {
 				String url = (String) jsonResource.get("url");
 				String mediaType = (String) jsonResource.get("media_type");
 				String explanation = (String) jsonResource.get("explanation");
-				System.out.println(url + ";" + mediaType + ";" + explanation);
+				logger.info(url);
+				logger.info(mediaType);
+				logger.info(explanation);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("An error occurred during request processing", e);
 		}
-
-		System.out.println(jsonResource.toString());
 	}
 
 }
