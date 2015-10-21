@@ -11,12 +11,16 @@
 	<artifactId>siu-core</artifactId>
 	<name>SIU - BE - Core</name>
 
-    <packaging>ejb</packaging>
+	<packaging>ejb</packaging>
 
-    <dependencies>
-        <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
-        </dependency>
-    </dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>us.monoid.web</groupId>
+			<artifactId>resty</artifactId>
+		</dependency>
+	</dependencies>
 </project>

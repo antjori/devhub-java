@@ -1,4 +1,4 @@
-package pt.devhub.siu.core;
+package pt.devhub.siu.core.bean;
 
 import java.io.Serializable;
 

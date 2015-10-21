@@ -53,6 +53,9 @@
 		<org.glassfish.javax.faces.version>2.2.12</org.glassfish.javax.faces.version>
 		<org.richfaces.version>4.5.10.Final</org.richfaces.version>
 		<slf4j-api.version>1.7.12</slf4j-api.version>
+
+        <!-- resty -->
+        <resty.version>0.3.2</resty.version>
 	</properties>
 
 	<inceptionYear>2014</inceptionYear>
@@ -99,6 +102,13 @@
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-core</artifactId>
                 <version>${logback-core.version}</version>
+            </dependency>
+
+            <!-- Rest -->
+            <dependency>
+                <groupId>us.monoid.web</groupId>
+                <artifactId>resty</artifactId>
+                <version>${resty.version}</version>
             </dependency>
 
 			<!-- Testing -->

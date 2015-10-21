@@ -9,7 +9,7 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.devhub.siu.core.RequestManager;
+import pt.devhub.siu.core.bean.RequestManager;
 import pt.devhub.siu.service.ServiceProcessor;
 
 @Named
