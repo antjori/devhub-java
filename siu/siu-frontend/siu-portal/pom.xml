@@ -16,11 +16,7 @@
 	<packaging>war</packaging>
 
 	<dependencies>
-		<dependency>
-			<groupId>javax</groupId>
-			<artifactId>javaee-api</artifactId>
-		</dependency>
-
+        <!-- faces -->
 		<dependency>
 			<groupId>org.glassfish</groupId>
 			<artifactId>javax.faces</artifactId>
@@ -45,10 +41,16 @@
 		<!-- compile -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>siu-core</artifactId>
+			<artifactId>siu-core-api</artifactId>
 			<version>${project.version}</version>
-			<type>ejb</type>
 		</dependency>
+
+        <!--dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>siu-core-impl</artifactId>
+            <version>${project.version}</version>
+            <type>ejb</type>
+        </dependency-->
 	</dependencies>
 
 	<build>

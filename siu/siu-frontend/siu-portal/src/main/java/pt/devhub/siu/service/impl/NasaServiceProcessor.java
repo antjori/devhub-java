@@ -24,7 +24,7 @@ public class NasaServiceProcessor implements ServiceProcessor, Serializable {
 	// Default logger
 	private static final Logger logger = LoggerFactory.getLogger(NasaServiceProcessor.class);
 
-	@EJB(beanName = "NasaRequestManager")
+	@EJB(lookup="java:global/siu-core-ear/remote/NasaRequestManager!pt.devhub.siu.core.bean.RequestManager")
 	private RequestManager requestManager;
 
 	@Override

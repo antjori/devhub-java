@@ -1,4 +1,4 @@
-package pt.devhub.siu.core.bean.impl;
+package pt.devhub.siu.core.bean;
 
 import javax.ejb.Stateless;
 
