@@ -1,9 +1,9 @@
-package pt.devhub.siu.core.bean;
+package pt.devhub.siu.core.bean.impl;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import pt.devhub.siu.core.bean.RequestManager;
 import us.monoid.web.JSONResource;
@@ -17,10 +17,18 @@ public class NasaRequestManager implements RequestManager {
 	 */
 	private static final long serialVersionUID = -4885032369456830806L;
 
-	private static final Logger logger = LoggerFactory.getLogger(NasaRequestManager.class);
-
 	// NASA A.P.O.D. request
 	private static final String APOD_REQUEST = "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY";
+
+	// The logger
+	@Inject
+	private Logger logger;// = LoggerFactory.getLogger(NasaRequestManager.class);
+
+	/**
+	 * Default constructor of the class.
+	 */
+	public NasaRequestManager() {
+	}
 
 	@Override
 	public void processRequest() {

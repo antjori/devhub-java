@@ -15,7 +15,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>siu-core-api</module>
-        <module>siu-core-impl</module>
+        <module>siu-core-cdi</module>
+        <module>siu-core-ejb</module>
     </modules>
 </project>
