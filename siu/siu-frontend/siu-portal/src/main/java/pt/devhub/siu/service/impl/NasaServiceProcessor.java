@@ -3,11 +3,11 @@ package pt.devhub.siu.service.impl;
 import java.io.Serializable;
 
 import javax.ejb.EJB;
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import pt.devhub.siu.core.bean.RequestManager;
 import pt.devhub.siu.service.ServiceProcessor;
@@ -21,10 +21,12 @@ public class NasaServiceProcessor implements ServiceProcessor, Serializable {
 	 */
 	private static final long serialVersionUID = -8803742285875290016L;
 
-	// Default logger
-	private static final Logger logger = LoggerFactory.getLogger(NasaServiceProcessor.class);
+	// The logger
+	@Inject
+	private Logger logger;// = LoggerFactory.getLogger(NasaServiceProcessor.class);
 
-	@EJB(lookup="java:global/siu-core-ear/remote/NasaRequestManager!pt.devhub.siu.core.bean.RequestManager")
+	//@EJB(lookup = "java:global/siu-core-ear/remote/NasaRequestManager!pt.devhub.siu.core.bean.RequestManager")
+	@EJB(beanName = "NasaRequestManager")
 	private RequestManager requestManager;
 
 	@Override

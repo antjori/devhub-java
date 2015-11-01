@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE xml>
-<configuration scan="true" scanPeriod="60 seconds">
+<configuration scan="true">
 
 	<property name="logDir"
 		value="/Users/antonioribeiro/Development/projects/logs" />
-	<property name="logFilename" value="siu_portal" />
+	<property name="logFilename" value="slf4j_siu_application" />
 	<property name="charset" value="UTF-8" />
 	<property name="msgPattern" value="%date [%thread] %-5level %logger M:[%msg]%n" />
 

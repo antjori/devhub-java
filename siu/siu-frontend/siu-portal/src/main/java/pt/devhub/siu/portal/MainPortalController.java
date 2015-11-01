@@ -9,7 +9,7 @@ import javax.inject.Named;
 
 import pt.devhub.siu.service.ServiceProcessor;
 import pt.devhub.siu.service.resolver.ServiceEntity;
-import pt.devhub.siu.service.resolver.ServiceEntity.ServiceEntityType;
+import pt.devhub.siu.service.resolver.ServiceEntityType;
 
 @Named
 @ViewScoped
@@ -30,10 +30,11 @@ public class MainPortalController implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		serviceProcessor.processRequest();
 	}
 
-	public String getDummyText() {
-		return "dummy text";
+	public String executeAction(ServiceEntityType type) {
+		serviceProcessor.processRequest();
+
+		return "services/nasaService";
 	}
 }

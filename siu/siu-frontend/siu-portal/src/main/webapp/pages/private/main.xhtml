@@ -7,14 +7,9 @@
 </h:head>
 <h:body>
 	<h3>Services' Integration Utility</h3>
-
+    <p/>
 	<h:form>
-		<div>
-			<h:inputText value="#{mainPortalController.dummyText}" />
-		</div>
+	   <h:commandLink value="Nasa API" action="#{mainPortalController.executeAction('NASA')}"/>
 	</h:form>
-
-	<h:graphicImage
-		url="http://apod.nasa.gov/apod/image/1510/M17_colombari_1024.jpg" />
 </h:body>
 </html>

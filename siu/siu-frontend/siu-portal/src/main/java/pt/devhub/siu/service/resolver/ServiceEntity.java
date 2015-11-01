@@ -14,7 +14,4 @@ public @interface ServiceEntity {
 
 	ServiceEntityType value();
 
-	public enum ServiceEntityType {
-		NASA;
-	}
 }
