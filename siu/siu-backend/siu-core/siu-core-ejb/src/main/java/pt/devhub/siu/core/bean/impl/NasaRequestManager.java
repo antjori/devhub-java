@@ -3,6 +3,7 @@ package pt.devhub.siu.core.bean.impl;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 
 import pt.devhub.siu.core.bean.RequestManager;
@@ -22,7 +23,7 @@ public class NasaRequestManager implements RequestManager {
 
 	// The logger
 	@Inject
-	private Logger logger;// = LoggerFactory.getLogger(NasaRequestManager.class);
+	private Logger logger;
 
 	/**
 	 * Default constructor of the class.
@@ -31,25 +32,27 @@ public class NasaRequestManager implements RequestManager {
 	}
 
 	@Override
-	public void processRequest() {
+	public String processRequest() {
 		logger.info("Received a request and forwarding it to NASA");
 
 		Resty resty = new Resty();
 		JSONResource jsonResource = null;
+		String url = StringUtils.EMPTY;
 
 		try {
 			jsonResource = resty.json(APOD_REQUEST);
 			if (jsonResource != null) {
-				String url = (String) jsonResource.get("url");
-				String mediaType = (String) jsonResource.get("media_type");
-				String explanation = (String) jsonResource.get("explanation");
+				url = (String) jsonResource.get("url");
+
 				logger.info(url);
-				logger.info(mediaType);
-				logger.info(explanation);
+				logger.info((String) jsonResource.get("media_type"));
+				logger.info((String) jsonResource.get("explanation"));
 			}
 		} catch (Exception e) {
 			logger.error("An error occurred during request processing", e);
 		}
+
+		return url;
 	}
 
 }

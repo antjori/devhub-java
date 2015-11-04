@@ -33,8 +33,6 @@ public class MainPortalController implements Serializable {
 	}
 
 	public String executeAction(ServiceEntityType type) {
-		serviceProcessor.processRequest();
-
-		return "services/nasaService";
+		return type.getUrl();
 	}
 }

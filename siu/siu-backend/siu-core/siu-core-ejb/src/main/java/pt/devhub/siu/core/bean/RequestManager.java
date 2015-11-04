@@ -11,5 +11,5 @@ import javax.ejb.Local;
 @Local
 public interface RequestManager extends Serializable {
 
-	void processRequest();
+	String processRequest();
 }

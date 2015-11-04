@@ -1,34 +1,40 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>pt.devhub.siu</groupId>
-        <artifactId>siu-core</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
-    </parent>
+	<parent>
+		<groupId>pt.devhub.siu</groupId>
+		<artifactId>siu-core</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
 
-    <artifactId>siu-core-ejb</artifactId>
-    <name>SIU - BE - Core - EJB</name>
+	<artifactId>siu-core-ejb</artifactId>
+	<name>SIU - BE - Core - EJB</name>
 
-    <packaging>ejb</packaging>
+	<packaging>ejb</packaging>
 
-    <dependencies>
-        <!-- SIU dependencies -->
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>siu-core-cdi</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+	<dependencies>
+		<!-- SIU dependencies -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>siu-core-cdi</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 
-        <!-- Other dependencies -->
+		<!-- Other dependencies -->
 
-        <!-- resty -->
-        <dependency>
-            <groupId>us.monoid.web</groupId>
-            <artifactId>resty</artifactId>
-        </dependency>
-    </dependencies>
+		<!-- commons lang3 -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
+
+		<!-- resty -->
+		<dependency>
+			<groupId>us.monoid.web</groupId>
+			<artifactId>resty</artifactId>
+		</dependency>
+	</dependencies>
 
 </project>
