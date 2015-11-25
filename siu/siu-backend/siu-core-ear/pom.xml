@@ -14,4 +14,19 @@
 
     <packaging>ear</packaging>
 
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>siu-core-impl</artifactId>
+            <version>${project.version}</version>
+            <classifier>uber</classifier>
+            <type>ejb</type>
+        </dependency>
+        <!-- resty -->
+        <dependency>
+            <groupId>us.monoid.web</groupId>
+            <artifactId>resty</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>
