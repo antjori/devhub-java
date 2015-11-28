@@ -23,16 +23,16 @@ public class NasaServiceProcessor implements ServiceProcessor, Serializable {
 
 	// The logger
 	@Inject
-	private Logger logger;// = LoggerFactory.getLogger(NasaServiceProcessor.class);
+	private Logger logger;
 
-	@EJB(lookup = "java:global/siu-core-ear/remote/NasaRequestManager!pt.devhub.siu.core.bean.RequestManager")
-	//@EJB(beanName = "NasaRequestManager")
+	@EJB(lookup = "java:global/siu-core-ear/remote/NasaRequestManager!pt.devhub.siu.core.bean.api.RequestManager")
 	private RequestManager requestManager;
 
 	@Override
-	public void processRequest() {
+	public String processRequest() {
 		logger.info("Processing service request...");
-		requestManager.processRequest();
+
+		return requestManager.processRequest();
 	}
 
 }

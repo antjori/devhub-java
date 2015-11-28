@@ -2,15 +2,19 @@ package pt.devhub.siu.portal;
 
 import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import pt.devhub.siu.service.ServiceProcessor;
-import pt.devhub.siu.service.resolver.ServiceEntity;
+import org.slf4j.Logger;
+
 import pt.devhub.siu.service.resolver.ServiceEntityType;
 
+/**
+ * The main portal controller.
+ * 
+ * Interacts with SIU's main page.
+ */
 @Named
 @ViewScoped
 public class MainPortalController implements Serializable {
@@ -20,19 +24,26 @@ public class MainPortalController implements Serializable {
 	 */
 	private static final long serialVersionUID = -437405400901656510L;
 
-	// Injection of the NASA service processor
+	// The logger
 	@Inject
-	@ServiceEntity(ServiceEntityType.NASA)
-	private ServiceProcessor serviceProcessor;
+	private Logger logger;
 
+	/**
+	 * Default constructor for this class.
+	 */
 	public MainPortalController() {
 	}
 
-	@PostConstruct
-	public void init() {
-	}
-
+	/**
+	 * Forwards the link request to the respective service entity page.
+	 * 
+	 * @param type
+	 *            the service entity type
+	 * @return the URL to be forwarded to
+	 */
 	public String executeAction(ServiceEntityType type) {
+		logger.info("Forwarding to " + type.name() + " page...");
+
 		return type.getUrl();
 	}
 }
