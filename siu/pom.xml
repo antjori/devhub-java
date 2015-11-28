@@ -66,14 +66,14 @@
 	<dependencyManagement>
 		<dependencies>
 
-            <!-- SPECIFIC DEPENDENCIES -->
+			<!-- SPECIFIC DEPENDENCIES -->
 
-            <!-- Java EE -->
-            <dependency>
-                <groupId>javax</groupId>
-                <artifactId>javaee-api</artifactId>
-                <version>${javaee-api.version}</version>
-            </dependency>
+			<!-- Java EE -->
+			<dependency>
+				<groupId>javax</groupId>
+				<artifactId>javaee-api</artifactId>
+				<version>${javaee-api.version}</version>
+			</dependency>
 
 			<!-- JSF -->
 			<dependency>
@@ -89,7 +89,7 @@
 				<version>${org.richfaces.version}</version>
 			</dependency>
 
-            <!-- GENERAL DEPENDENCIES -->
+			<!-- GENERAL DEPENDENCIES -->
 
 			<!-- Commons Lang3 -->
 			<dependency>

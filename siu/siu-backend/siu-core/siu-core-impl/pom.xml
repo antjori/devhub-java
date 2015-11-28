@@ -17,9 +17,9 @@
 	<dependencies>
 		<!-- SIU dependencies -->
 		<dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>siu-core-api</artifactId>
-            <version>${project.version}</version>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>siu-core-api</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 
 		<dependency>
@@ -42,5 +42,31 @@
 			<artifactId>resty</artifactId>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<shadedArtifactAttached>true</shadedArtifactAttached>
+							<shadedClassifierName>uber</shadedClassifierName>
+							<artifactSet>
+								<includes>
+									<include>pt.devhub.siu:*</include>
+								</includes>
+							</artifactSet>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>
