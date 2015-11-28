@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:f="http://xmlns.jcp.org/jsf/core"
-    xmlns:h="http://xmlns.jcp.org/jsf/html">
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html">
 <h:head>
-    <title>Services' Integration Utility</title>
+	<title>Services' Integration Utility</title>
 </h:head>
+
+<!--f:event listener="#{nasaPortalController.fetchNasaPodUrl}"
+	type="preRenderView" /-->
+
 <h:body>
-    <h3>Services' Integration Utility</h3>
-    <p/>
-    <h:graphicImage
-        url="http://apod.nasa.gov/apod/image/1510/M17_colombari_1024.jpg" />
+	<h2>Services' Integration Utility</h2>
+	<p />
+	<h3>NASA's Picture of the Day</h3>
+	<p />
+	<h:graphicImage url="#{nasaPortalController.podUrl}" />
 </h:body>
 </html>

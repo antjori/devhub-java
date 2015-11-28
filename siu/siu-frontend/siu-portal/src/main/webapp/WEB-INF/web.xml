@@ -35,11 +35,15 @@
 
 	<!-- Context parameters -->
 	<context-param>
-        <param-name>javax.faces.FACELETS_REFRESH_PERIOD</param-name>
-        <param-value>0</param-value>
-    </context-param>
+		<param-name>javax.faces.FACELETS_REFRESH_PERIOD</param-name>
+		<param-value>0</param-value>
+	</context-param>
 	<context-param>
 		<param-name>javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
 		<param-value>true</param-value>
 	</context-param>
 
@@ -48,8 +52,8 @@
 		<extension>xhtml</extension>
 		<mime-type>application/xhtml+xml</mime-type>
 	</mime-mapping>
-	<mime-mapping> 
-        <extension>ico</extension> 
-        <mime-type>image/x-icon</mime-type> 
-    </mime-mapping>
+	<mime-mapping>
+		<extension>ico</extension>
+		<mime-type>image/x-icon</mime-type>
+	</mime-mapping>
 </web-app>
