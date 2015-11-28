@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<configuration scan="true">
+
+	<property name="logDir" value="/Users/antonioribeiro/Development/projects/logs" />
+	<property name="logFilename" value="slf4j_siu_portal" />
+	<property name="charset" value="UTF-8" />
+	<property name="msgPattern" value="%date [%thread] %-5level %logger M:[%msg]%n" />
+
+	<appender name="fileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${logDir}/${logFilename}.log</file>
+		<append>true</append>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily roll over -->
+			<fileNamePattern>${logDir}/${logFilename}.%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
+			<!-- maximum size of 5MB -->
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>5MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<!-- keep one week worth of history -->
+			<maxHistory>7</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<charset>${charset}</charset>
+			<pattern>${msgPattern}</pattern>
+		</encoder>
+	</appender>
+
+	<root level="info">
+		<appender-ref ref="fileAppender" />
+	</root>
+</configuration>
