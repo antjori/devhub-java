@@ -9,7 +9,7 @@ import javax.inject.Named;
 
 import org.slf4j.Logger;
 
-import pt.devhub.siu.core.bean.RequestManager;
+import pt.devhub.siu.core.bean.api.RequestManager;
 import pt.devhub.siu.service.ServiceProcessor;
 
 @Named
@@ -25,8 +25,8 @@ public class NasaServiceProcessor implements ServiceProcessor, Serializable {
 	@Inject
 	private Logger logger;// = LoggerFactory.getLogger(NasaServiceProcessor.class);
 
-	//@EJB(lookup = "java:global/siu-core-ear/remote/NasaRequestManager!pt.devhub.siu.core.bean.RequestManager")
-	@EJB(beanName = "NasaRequestManager")
+	@EJB(lookup = "java:global/siu-core-ear/remote/NasaRequestManager!pt.devhub.siu.core.bean.RequestManager")
+	//@EJB(beanName = "NasaRequestManager")
 	private RequestManager requestManager;
 
 	@Override

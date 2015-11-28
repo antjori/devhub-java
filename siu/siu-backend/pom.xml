@@ -16,5 +16,6 @@
 
 	<modules>
 		<module>siu-core</module>
+		<module>siu-core-ear</module>
 	</modules>
 </project>
