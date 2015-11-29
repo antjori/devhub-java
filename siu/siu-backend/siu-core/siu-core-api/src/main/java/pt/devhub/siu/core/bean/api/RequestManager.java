@@ -4,12 +4,13 @@ import java.io.Serializable;
 
 import javax.ejb.Remote;
 
+import pt.devhub.siu.common.entity.IResponse;
+
 /**
  * Bean responsible for handling the request coming from the front-end.
  */
 @Remote
-//@Local
 public interface RequestManager extends Serializable {
 
-	String processRequest();
+	IResponse processRequest();
 }

@@ -6,6 +6,8 @@ import javax.inject.Inject;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 
+import pt.devhub.siu.common.entity.IResponse;
+import pt.devhub.siu.common.entity.response.NasaResponse.NasaResponseBuilder;
 import pt.devhub.siu.core.bean.api.RequestManager;
 import us.monoid.web.JSONResource;
 import us.monoid.web.Resty;
@@ -32,27 +34,32 @@ public class NasaRequestManager implements RequestManager {
 	}
 
 	@Override
-	public String processRequest() {
+	public IResponse processRequest() {
 		logger.info("Received a request and forwarding it to NASA API");
 
 		Resty resty = new Resty();
 		JSONResource jsonResource = null;
 		String url = StringUtils.EMPTY;
+		NasaResponseBuilder responseBuilder = null;
 
 		try {
 			jsonResource = resty.json(APOD_REQUEST);
+
 			if (jsonResource != null) {
 				url = (String) jsonResource.get("url");
 
-				logger.info(url);
-				logger.info((String) jsonResource.get("media_type"));
-				logger.info((String) jsonResource.get("explanation"));
+				logger.info("NASA's picture of the day URL: " + url);
+
+				responseBuilder = new NasaResponseBuilder(url);
+				responseBuilder.setTitle((String) jsonResource.get("title"));
+				responseBuilder.setMediaType((String) jsonResource.get("media_type"));
+				responseBuilder.setExplanation((String) jsonResource.get("explanation"));
 			}
 		} catch (Exception e) {
 			logger.error("An error occurred during request processing", e);
 		}
 
-		return url;
+		return responseBuilder.build();
 	}
 
 }

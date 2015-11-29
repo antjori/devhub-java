@@ -18,6 +18,7 @@
 	<!-- Modules -->
 	<modules>
 		<module>siu-backend</module>
+		<module>siu-common</module>
 		<module>siu-frontend</module>
 	</modules>
 

@@ -1,4 +1,4 @@
-package pt.devhub.siu.portal;
+package pt.devhub.siu.portal.nasa;
 
 import java.io.Serializable;
 
@@ -7,6 +7,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import pt.devhub.siu.common.entity.IResponse;
+import pt.devhub.siu.common.entity.response.NasaResponse;
 import pt.devhub.siu.service.ServiceProcessor;
 import pt.devhub.siu.service.resolver.ServiceEntity;
 import pt.devhub.siu.service.resolver.ServiceEntityType;
@@ -23,7 +25,7 @@ public class NasaPortalController implements Serializable {
 	 */
 	private static final long serialVersionUID = 3046707241647696190L;
 
-	private String podUrl;
+	private IResponse nasaResponse;
 
 	// Injection of the NASA service processor
 	@Inject
@@ -38,7 +40,14 @@ public class NasaPortalController implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		setPodUrl(serviceProcessor.processRequest());
+		setNasaResponse(serviceProcessor.processRequest());
+	}
+
+	/**
+	 * @param nasaResponse the nasaResponse to set
+	 */
+	public void setNasaResponse(final IResponse nasaResponse) {
+		this.nasaResponse = nasaResponse;
 	}
 
 	/*public void fetchNasaPodUrl() {
@@ -52,16 +61,7 @@ public class NasaPortalController implements Serializable {
 	 * @return the podUrl
 	 */
 	public String getPodUrl() {
-		return podUrl;
+		return ((NasaResponse) nasaResponse).getPodUrl();
 	}
 
-	/**
-	 * Sets the URL for the picture of the day.
-	 * 
-	 * @param podUrl
-	 *            the podUrl to set
-	 */
-	public void setPodUrl(final String podUrl) {
-		this.podUrl = podUrl;
-	}
 }

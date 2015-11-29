@@ -9,6 +9,7 @@ import javax.inject.Named;
 
 import org.slf4j.Logger;
 
+import pt.devhub.siu.common.entity.IResponse;
 import pt.devhub.siu.core.bean.api.RequestManager;
 import pt.devhub.siu.service.ServiceProcessor;
 
@@ -29,7 +30,7 @@ public class NasaServiceProcessor implements ServiceProcessor, Serializable {
 	private RequestManager requestManager;
 
 	@Override
-	public String processRequest() {
+	public IResponse processRequest() {
 		logger.info("Processing service request...");
 
 		return requestManager.processRequest();

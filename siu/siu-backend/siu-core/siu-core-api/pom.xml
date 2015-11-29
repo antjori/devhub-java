@@ -12,4 +12,12 @@
 	<artifactId>siu-core-api</artifactId>
 	<name>SIU - BE - Core - API</name>
 
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>siu-common-entity</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+
 </project>
