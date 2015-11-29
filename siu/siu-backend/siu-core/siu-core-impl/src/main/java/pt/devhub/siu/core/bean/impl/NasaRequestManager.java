@@ -33,7 +33,7 @@ public class NasaRequestManager implements RequestManager {
 
 	@Override
 	public String processRequest() {
-		logger.info("Received a request and forwarding it to NASA");
+		logger.info("Received a request and forwarding it to NASA API");
 
 		Resty resty = new Resty();
 		JSONResource jsonResource = null;
