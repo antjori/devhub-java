@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>siu-core</artifactId>
-    <name>SIU - Core (modules)</name>
+    <name>SIU - BE - Core (modules)</name>
 
     <packaging>pom</packaging>
 

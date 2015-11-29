@@ -10,7 +10,7 @@
 	</parent>
 
 	<artifactId>siu-core-ear</artifactId>
-	<name>SIU - BE - Core - EAR</name>
+	<name>SIU - BE - Core EAR</name>
 
 	<packaging>ear</packaging>
 
