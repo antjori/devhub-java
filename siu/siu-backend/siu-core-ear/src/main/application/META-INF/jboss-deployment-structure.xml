@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss-deployment-structure xmlns="urn:jboss:deployment-structure:1.2"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:jboss:deployment-structure:1.2 http://www.jboss.org/schema/jbossas/jboss-deployment-structure-1_2.xsd">
+
+	<deployment>
+
+		<!-- exclude-subsystem prevents a subsystems deployment unit processors 
+			running on a deployment -->
+		<!-- which gives basically the same effect as removing the subsystem, but 
+			it only affects single deployment -->
+		<exclude-subsystems>
+			<subsystem name="logging" />
+		</exclude-subsystems>
+
+	</deployment>
+
+</jboss-deployment-structure>

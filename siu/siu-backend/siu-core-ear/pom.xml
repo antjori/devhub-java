@@ -22,11 +22,6 @@
 			<classifier>uber</classifier>
 			<type>ejb</type>
 		</dependency>
-		<!-- resty -->
-		<dependency>
-			<groupId>us.monoid.web</groupId>
-			<artifactId>resty</artifactId>
-		</dependency>
 	</dependencies>
 
 	<build>
@@ -36,7 +31,8 @@
 				<configuration>
 					<generateApplicationXml>true</generateApplicationXml>
 					<defaultLibBundleDir>lib</defaultLibBundleDir>
-					<packagingIncludes>META-INF/*.xml,siu-core-*.jar,lib/resty*</packagingIncludes>
+					<packagingIncludes>META-INF/*.xml,siu-core-*.jar,lib/*</packagingIncludes>
+					<packagingExcludes>lib/siu*</packagingExcludes>
 					<finalName>${project.build.finalName}</finalName>
 					<applicationName>${project.artifactId}</applicationName>
 					<modules>
@@ -45,10 +41,6 @@
 							<artifactId>siu-core-impl</artifactId>
 							<classifier>uber</classifier>
 						</ejbModule>
-						<jarModule>
-							<groupId>us.monoid.web</groupId>
-							<artifactId>resty</artifactId>
-						</jarModule>
 					</modules>
 					<version>7</version>
 				</configuration>
