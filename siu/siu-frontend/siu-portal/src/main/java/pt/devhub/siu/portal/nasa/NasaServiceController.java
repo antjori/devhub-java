@@ -18,7 +18,7 @@ import pt.devhub.siu.service.resolver.ServiceEntityType;
  */
 @Named
 @ViewScoped
-public class NasaPortalController implements Serializable {
+public class NasaServiceController implements Serializable {
 
 	/**
 	 * The serial version unique identifier.
@@ -35,7 +35,7 @@ public class NasaPortalController implements Serializable {
 	/**
 	 * Default constructor for this class.
 	 */
-	public NasaPortalController() {
+	public NasaServiceController() {
 	}
 
 	@PostConstruct
