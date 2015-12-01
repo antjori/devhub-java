@@ -61,7 +61,19 @@ public class NasaServiceController implements Serializable {
 	 * @return the podUrl
 	 */
 	public String getPodUrl() {
-		return ((NasaResponse) nasaResponse).getPodUrl();
+		return getNasaResponse().getPodUrl();
 	}
 
+	/**
+	 * Returns the title for the picture of the day.
+	 * 
+	 * @return the podTitle
+	 */
+	public String getPodTitle() {
+		return getNasaResponse().getTitle();
+	}
+
+	private NasaResponse getNasaResponse() {
+		return (NasaResponse) nasaResponse;
+	}
 }
