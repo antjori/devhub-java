@@ -15,5 +15,7 @@ SIU Project's APIs
 ### [Google API](https://developers.google.com)
 
 <ul>
-<li>[Google API Discovery Service](https://developers.google.com/discovery/v1/reference)</li>
+<li>
+[Google API Discovery Service](https://developers.google.com/discovery/v1/reference)
+</li>
 </ul>
