@@ -27,7 +27,7 @@ public class NasaServiceController implements Serializable {
 
 	private IResponse nasaResponse;
 
-	// Injection of the NASA service processor
+	// Injection of NASA's service processor
 	@Inject
 	@ServiceEntity(ServiceEntityType.NASA)
 	private ServiceProcessor serviceProcessor;

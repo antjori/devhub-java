@@ -6,8 +6,12 @@ import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
 
 import pt.devhub.siu.service.ServiceProcessor;
+import pt.devhub.siu.service.impl.GoogleServiceProcessor;
 import pt.devhub.siu.service.impl.NasaServiceProcessor;
 
+/**
+ * Producer that resolves the several service processor implementations.
+ */
 @SessionScoped
 public class ServiceEntityResolver implements Serializable {
 
@@ -22,4 +26,9 @@ public class ServiceEntityResolver implements Serializable {
 		return nasaServiceProcessor;
 	}
 
+	@Produces
+	@ServiceEntity(ServiceEntityType.GOOGLE)
+	public ServiceProcessor getGoogleServiceProcessor(GoogleServiceProcessor googleServiceProcessor) {
+		return googleServiceProcessor;
+	}
 }
