@@ -7,9 +7,12 @@
 </h:head>
 <h:body>
 	<h3>Services' Integration Utility</h3>
-    <p/>
+	<p />
 	<h:form>
-	   <h:commandLink value="Nasa API" action="#{mainPortalController.executeAction('NASA')}"/>
+		<h:commandLink value="Nasa APOD API"
+			action="#{mainPortalController.executeAction('NASA')}" />
+		<h:commandLink value="Google's API Discovery"
+			action="#{mainPortalController.executeAction('GOOGLE')}" />
 	</h:form>
 </h:body>
 </html>
