@@ -44,16 +44,18 @@ public class NasaServiceController implements Serializable {
 	}
 
 	/**
-	 * @param nasaResponse the nasaResponse to set
+	 * @param nasaResponse
+	 *            the nasaResponse to set
 	 */
 	public void setNasaResponse(final IResponse nasaResponse) {
 		this.nasaResponse = nasaResponse;
 	}
 
-	/*public void fetchNasaPodUrl() {
-		System.out.println("fetchNasaPodUrl".toUpperCase());
-		setPodUrl(serviceProcessor.processRequest());
-	}*/
+	/*
+	 * public void fetchNasaPodUrl() {
+	 * System.out.println("fetchNasaPodUrl".toUpperCase());
+	 * setPodUrl(serviceProcessor.processRequest()); }
+	 */
 
 	/**
 	 * Returns the URL for the picture of the day.
@@ -73,6 +75,11 @@ public class NasaServiceController implements Serializable {
 		return getNasaResponse().getTitle();
 	}
 
+	/**
+	 * Gets NASA's response making the proper cast.
+	 * 
+	 * @return NASA's response object
+	 */
 	private NasaResponse getNasaResponse() {
 		return (NasaResponse) nasaResponse;
 	}

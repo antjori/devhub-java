@@ -3,7 +3,7 @@ package pt.devhub.siu.common.entity.response;
 import pt.devhub.siu.common.entity.IResponse;
 
 /**
- * Object that contains the data that represents the NASA API response.
+ * Object that contains the data that represents the NASA APOD API response.
  */
 public class NasaResponse implements IResponse {
 
