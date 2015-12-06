@@ -12,6 +12,9 @@ import pt.devhub.siu.core.bean.api.RequestManager;
 import us.monoid.web.JSONResource;
 import us.monoid.web.Resty;
 
+/**
+ * Bean responsible for handling the requests and dispatch them to the NASA API.
+ */
 @Stateless
 public class NasaRequestManager implements RequestManager {
 
@@ -20,7 +23,7 @@ public class NasaRequestManager implements RequestManager {
 	 */
 	private static final long serialVersionUID = -4885032369456830806L;
 
-	// NASA A.P.O.D. request
+	// NASA APOD request
 	private static final String APOD_REQUEST = "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY";
 
 	// The logger
@@ -35,7 +38,7 @@ public class NasaRequestManager implements RequestManager {
 
 	@Override
 	public IResponse processRequest() {
-		logger.info("Received a request and forwarding it to NASA API");
+		logger.info("Received a request and forwarding it to NASA's APOD service");
 
 		Resty resty = new Resty();
 		JSONResource jsonResource = null;

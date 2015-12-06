@@ -34,7 +34,7 @@ public class NasaServiceProcessor implements ServiceProcessor, Serializable {
 
 	@Override
 	public IResponse processRequest() {
-		logger.info("Processing service request...");
+		logger.info("Processing service request to NASA API...");
 
 		return requestManager.processRequest();
 	}
