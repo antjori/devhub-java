@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import pt.devhub.siu.common.entity.IResponse;
+import pt.devhub.siu.common.entity.response.GoogleResponse;
 import pt.devhub.siu.service.ServiceProcessor;
 import pt.devhub.siu.service.resolver.ServiceEntity;
 import pt.devhub.siu.service.resolver.ServiceEntityType;
@@ -34,5 +35,14 @@ public class GoogleServiceController implements Serializable {
 	 * Default constructor for this class.
 	 */
 	public GoogleServiceController() {
+	}
+
+	/**
+	 * Gets Google's response making the proper cast.
+	 * 
+	 * @return Google's response object
+	 */
+	private GoogleResponse getGoogleResponse() {
+		return (GoogleResponse) googleResponse;
 	}
 }
