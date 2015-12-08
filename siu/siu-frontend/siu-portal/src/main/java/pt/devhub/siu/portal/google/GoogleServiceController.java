@@ -2,6 +2,7 @@ package pt.devhub.siu.portal.google;
 
 import java.io.Serializable;
 
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -35,6 +36,22 @@ public class GoogleServiceController implements Serializable {
 	 * Default constructor for this class.
 	 */
 	public GoogleServiceController() {
+	}
+
+	/**
+	 * Executes the call to Google's API Discovery service.
+	 */
+	@PostConstruct
+	public void init() {
+		setGoogleResponse(serviceProcessor.processRequest());
+	}
+
+	/**
+	 * @param googleResponse
+	 *            the googleResponse to set
+	 */
+	private void setGoogleResponse(final IResponse googleResponse) {
+		this.googleResponse = googleResponse;
 	}
 
 	/**
