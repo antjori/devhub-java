@@ -38,6 +38,9 @@ public class NasaServiceController implements Serializable {
 	public NasaServiceController() {
 	}
 
+	/**
+	 * Executes the call to Nasa's APOD API.
+	 */
 	@PostConstruct
 	public void init() {
 		setNasaResponse(serviceProcessor.processRequest());
@@ -47,7 +50,7 @@ public class NasaServiceController implements Serializable {
 	 * @param nasaResponse
 	 *            the nasaResponse to set
 	 */
-	public void setNasaResponse(final IResponse nasaResponse) {
+	private void setNasaResponse(final IResponse nasaResponse) {
 		this.nasaResponse = nasaResponse;
 	}
 
