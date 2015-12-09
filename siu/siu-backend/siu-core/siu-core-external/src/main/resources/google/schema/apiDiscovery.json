@@ -1,0 +1,25 @@
+{
+  "kind": "discovery#directoryList",
+  "discoveryVersion": "v1",
+  "items": [
+    {
+      "kind": "discovery#directoryItem",
+      "id": "string",
+      "name": "string",
+      "version": "string",
+      "title": "string",
+      "description": "string",
+      "discoveryRestUrl": "string",
+      "discoveryLink": "string",
+      "icons": {
+        "x16": "string",
+        "x32": "string"
+      },
+      "documentationLink": "string",
+      "labels": [
+        "string"
+      ],
+      "preferred": "boolean"
+    }
+  ]
+}
