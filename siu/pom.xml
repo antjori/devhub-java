@@ -47,6 +47,8 @@
 		<maven-shade-plugin.version>2.4.1</maven-shade-plugin.version>
 		<maven-war-plugin.version>2.6</maven-war-plugin.version>
 
+		<jsonschema2pojo.version>0.4.16</jsonschema2pojo.version>
+
 		<!-- dependency versions -->
 		<commons-lang3.version>3.4</commons-lang3.version>
 		<javaee-api.version>7.0</javaee-api.version>
@@ -248,6 +250,16 @@
 					<artifactId>maven-shade-plugin</artifactId>
 					<version>${maven-shade-plugin.version}</version>
 				</plugin>
+
+				<!-- OTHER PLUGINS -->
+
+				<!-- jsonschema2pojo plugin -->
+				<plugin>
+					<groupId>org.jsonschema2pojo</groupId>
+					<artifactId>jsonschema2pojo-maven-plugin</artifactId>
+					<version>${jsonschema2pojo.version}</version>
+				</plugin>
+
 			</plugins>
 		</pluginManagement>
 
