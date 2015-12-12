@@ -17,7 +17,7 @@
     <modules>
         <module>siu-core-api</module>
         <module>siu-core-cdi</module>
-        <module>siu-core-external</module>
+        <module>siu-core-ext</module>
         <module>siu-core-impl</module>
     </modules>
 </project>

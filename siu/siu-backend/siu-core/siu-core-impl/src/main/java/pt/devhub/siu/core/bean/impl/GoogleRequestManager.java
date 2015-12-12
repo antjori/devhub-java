@@ -3,10 +3,17 @@ package pt.devhub.siu.core.bean.impl;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import pt.devhub.siu.common.entity.IResponse;
+import pt.devhub.siu.common.entity.response.NasaResponse.NasaResponseBuilder;
 import pt.devhub.siu.core.bean.api.RequestManager;
+import pt.devhub.siu.external.google.ApiDiscovery;
+import us.monoid.web.JSONResource;
+import us.monoid.web.Resty;
 
 /**
  * Bean responsible for handling the requests and dispatch them to the Google
@@ -31,7 +38,22 @@ public class GoogleRequestManager implements RequestManager {
 	public IResponse processRequest() {
 		logger.info("Received a request and forwarding it to Google's API Discovery service");
 
-		// TODO Auto-generated method stub
+		Resty resty = new Resty();
+		JSONResource jsonResource = null;
+		String url = StringUtils.EMPTY;
+		Object responseBuilder = null;
+
+		try {
+			jsonResource = resty.json(API_DISCOVERY_REQUEST);
+
+			if (jsonResource != null) {
+				ObjectMapper mapper = new ObjectMapper();
+				ApiDiscovery apiDiscovery = mapper.readValue(jsonResource.toString(), ApiDiscovery.class);
+			}
+		} catch (Exception e) {
+			logger.error("An error occurred during request processing", e);
+		}
+
 		return null;
 	}
 
