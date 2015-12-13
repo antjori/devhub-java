@@ -1,6 +1,6 @@
-package pt.devhub.siu.common.entity.response;
+package pt.devhub.siu.common.response.impl;
 
-import pt.devhub.siu.common.entity.IResponse;
+import pt.devhub.siu.common.response.api.IResponse;
 
 /**
  * Object that contains the data that represents the NASA APOD API response.

@@ -9,7 +9,15 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>siu-common-entity</artifactId>
-	<name>SIU - Common - Entities</name>
+	<artifactId>siu-common-impl</artifactId>
+	<name>SIU - Common - Implementation</name>
 
+    <dependencies>
+        <!-- SIU dependencies -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>siu-common-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 </project>

@@ -16,6 +16,8 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>siu-common-entity</module>
+		<module>siu-common-api</module>
+		<module>siu-common-ext</module>
+		<module>siu-common-impl</module>
 	</modules>
 </project>
