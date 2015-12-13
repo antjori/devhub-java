@@ -1,6 +1,6 @@
 package pt.devhub.siu.service;
 
-import pt.devhub.siu.common.entity.IResponse;
+import pt.devhub.siu.common.response.api.IResponse;
 
 public interface ServiceProcessor {
 
