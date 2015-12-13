@@ -6,8 +6,8 @@ import javax.inject.Inject;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 
-import pt.devhub.siu.common.entity.IResponse;
-import pt.devhub.siu.common.entity.response.NasaResponse.NasaResponseBuilder;
+import pt.devhub.siu.common.response.api.IResponse;
+import pt.devhub.siu.common.response.impl.NasaResponse.NasaResponseBuilder;
 import pt.devhub.siu.core.bean.api.RequestManager;
 import us.monoid.web.JSONResource;
 import us.monoid.web.Resty;

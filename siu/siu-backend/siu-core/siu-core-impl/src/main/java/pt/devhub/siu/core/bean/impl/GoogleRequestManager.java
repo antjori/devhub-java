@@ -8,10 +8,9 @@ import org.slf4j.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import pt.devhub.siu.common.entity.IResponse;
-import pt.devhub.siu.common.entity.response.NasaResponse.NasaResponseBuilder;
+import pt.devhub.siu.common.response.api.IResponse;
+import pt.devhub.siu.common.response.ext.google.ApiDiscovery;
 import pt.devhub.siu.core.bean.api.RequestManager;
-import pt.devhub.siu.external.google.ApiDiscovery;
 import us.monoid.web.JSONResource;
 import us.monoid.web.Resty;
 

@@ -28,17 +28,23 @@
 			<version>${project.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>siu-common-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>siu-core-ext</artifactId>
+            <artifactId>siu-common-ext</artifactId>
             <version>${project.version}</version>
         </dependency>
 
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>siu-common-entity</artifactId>
-			<version>${project.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>siu-common-impl</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
 		<!-- Other dependencies -->
 
