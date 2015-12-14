@@ -40,7 +40,7 @@ public class SiuLoggerFactory implements Serializable {
 	 * @return the Slf4j logger instance
 	 */
 	@Produces
-	public Logger createLogger(InjectionPoint injectionPoint) {
+	public Logger createLogger(final InjectionPoint injectionPoint) {
 		Class<?> clazz = injectionPoint.getMember().getDeclaringClass();
 		Logger logger = LoggerFactory.getLogger(clazz);
 

@@ -3,13 +3,13 @@ package pt.devhub.siu.core.bean.impl;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import pt.devhub.siu.common.response.api.IResponse;
 import pt.devhub.siu.common.response.ext.google.ApiDiscovery;
+import pt.devhub.siu.common.response.impl.GoogleResponse;
 import pt.devhub.siu.core.bean.api.RequestManager;
 import us.monoid.web.JSONResource;
 import us.monoid.web.Resty;
@@ -39,21 +39,25 @@ public class GoogleRequestManager implements RequestManager {
 
 		Resty resty = new Resty();
 		JSONResource jsonResource = null;
-		String url = StringUtils.EMPTY;
-		Object responseBuilder = null;
+		IResponse response = null;
 
 		try {
+			ObjectMapper mapper = null;
+			ApiDiscovery apiDiscovery = null;
+
 			jsonResource = resty.json(API_DISCOVERY_REQUEST);
 
 			if (jsonResource != null) {
-				ObjectMapper mapper = new ObjectMapper();
-				ApiDiscovery apiDiscovery = mapper.readValue(jsonResource.toString(), ApiDiscovery.class);
+				mapper = new ObjectMapper();
+				apiDiscovery = mapper.readValue(jsonResource.toString(), ApiDiscovery.class);
 			}
+
+			response = new GoogleResponse(apiDiscovery);
 		} catch (Exception e) {
 			logger.error("An error occurred during request processing", e);
 		}
 
-		return null;
+		return response;
 	}
 
 }
