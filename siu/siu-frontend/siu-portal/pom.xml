@@ -37,15 +37,10 @@
 
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>siu-common-api</artifactId>
+			<artifactId>siu-common-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>siu-common-impl</artifactId>
-            <version>${project.version}</version>
-        </dependency>
 	</dependencies>
 
 	<build>

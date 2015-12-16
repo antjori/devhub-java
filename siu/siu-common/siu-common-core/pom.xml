@@ -4,20 +4,20 @@
 
 	<parent>
 		<groupId>pt.devhub.siu</groupId>
-		<artifactId>siu-core</artifactId>
+		<artifactId>siu-common</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>siu-core-api</artifactId>
-	<name>SIU - BE - Core - API</name>
+	<artifactId>siu-common-core</artifactId>
+	<name>SIU - Common - Core</name>
 
-	<dependencies>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>siu-common-core</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-	</dependencies>
-
+    <dependencies>
+        <!-- SIU dependencies -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>siu-common-ext</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 </project>

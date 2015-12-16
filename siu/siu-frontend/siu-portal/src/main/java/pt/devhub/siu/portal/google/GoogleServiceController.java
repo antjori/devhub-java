@@ -7,7 +7,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import pt.devhub.siu.common.response.api.IResponse;
+import pt.devhub.siu.common.response.IResponse;
 import pt.devhub.siu.common.response.impl.GoogleResponse;
 import pt.devhub.siu.service.ServiceProcessor;
 import pt.devhub.siu.service.resolver.ServiceEntity;

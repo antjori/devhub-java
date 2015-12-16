@@ -31,7 +31,7 @@
 				<configuration>
 					<generateApplicationXml>true</generateApplicationXml>
 					<defaultLibBundleDir>lib</defaultLibBundleDir>
-					<packagingIncludes>META-INF/*.xml,siu-core-*.jar,lib/*</packagingIncludes>
+					<packagingIncludes>META-INF/*.xml,siu-co*.jar,lib/*</packagingIncludes>
 					<packagingExcludes>lib/siu*</packagingExcludes>
 					<finalName>${project.build.finalName}</finalName>
 					<applicationName>${project.artifactId}</applicationName>

@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import javax.ejb.Remote;
 
-import pt.devhub.siu.common.response.api.IResponse;
+import pt.devhub.siu.common.response.IResponse;
 
 /**
  * Bean responsible for handling the request coming from the front-end.

@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import pt.devhub.siu.common.response.api.IResponse;
+import pt.devhub.siu.common.response.IResponse;
 import pt.devhub.siu.common.response.ext.google.ApiDiscovery;
 import pt.devhub.siu.common.response.impl.GoogleResponse;
 import pt.devhub.siu.core.bean.api.RequestManager;
