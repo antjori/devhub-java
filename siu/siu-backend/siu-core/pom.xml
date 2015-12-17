@@ -16,7 +16,6 @@
 
     <modules>
         <module>siu-core-api</module>
-        <module>siu-core-cdi</module>
         <module>siu-core-impl</module>
     </modules>
 </project>

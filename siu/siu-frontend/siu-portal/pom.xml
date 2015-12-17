@@ -31,7 +31,7 @@
 
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>siu-core-cdi</artifactId>
+			<artifactId>siu-common-cdi</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
