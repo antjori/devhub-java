@@ -1,6 +1,7 @@
 package pt.devhub.siu.portal.google;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -8,6 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import pt.devhub.siu.common.response.IResponse;
+import pt.devhub.siu.common.response.ext.google.Item;
 import pt.devhub.siu.common.response.impl.GoogleResponse;
 import pt.devhub.siu.service.ServiceProcessor;
 import pt.devhub.siu.service.resolver.ServiceEntity;
@@ -52,6 +54,10 @@ public class GoogleServiceController implements Serializable {
 	 */
 	private void setGoogleResponse(final IResponse googleResponse) {
 		this.googleResponse = googleResponse;
+	}
+
+	public List<Item> getGoogleApis() {
+		return getGoogleResponse().getApiDiscovery().getItems();
 	}
 
 	/**
