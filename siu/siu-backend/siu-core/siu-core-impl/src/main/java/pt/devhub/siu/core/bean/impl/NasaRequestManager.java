@@ -42,10 +42,14 @@ public class NasaRequestManager implements RequestManager {
 
 		Resty resty = new Resty();
 		JSONResource jsonResource = null;
-		String url = StringUtils.EMPTY;
 		NasaResponseBuilder responseBuilder = null;
 
 		try {
+			String url = StringUtils.EMPTY;
+			String title = StringUtils.EMPTY;
+			String mediaType = StringUtils.EMPTY;
+			String explanation = StringUtils.EMPTY;
+
 			jsonResource = resty.json(APOD_REQUEST);
 
 			if (jsonResource != null) {
@@ -54,10 +58,17 @@ public class NasaRequestManager implements RequestManager {
 				logger.info("NASA's picture of the day URL: " + url);
 
 				responseBuilder = new NasaResponseBuilder(url);
-				responseBuilder.setTitle((String) jsonResource.get("title"));
-				responseBuilder.setMediaType((String) jsonResource.get("media_type"));
-				responseBuilder.setExplanation((String) jsonResource.get("explanation"));
+				title = (String) jsonResource.get("title");
+				mediaType = (String) jsonResource.get("media_type");
+				explanation = (String) jsonResource.get("explanation");
+				
 			}
+			
+			responseBuilder = new NasaResponseBuilder(url);
+			responseBuilder.setTitle(title);
+			responseBuilder.setMediaType(mediaType);
+			responseBuilder.setExplanation(explanation);
+
 		} catch (Exception e) {
 			logger.error("An error occurred during request processing", e);
 		}
