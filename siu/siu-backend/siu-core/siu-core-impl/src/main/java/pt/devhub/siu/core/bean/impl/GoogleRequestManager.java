@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import pt.devhub.siu.common.response.IResponse;
 import pt.devhub.siu.common.response.ext.google.ApiDiscovery;
+import pt.devhub.siu.common.response.ext.google.Item;
 import pt.devhub.siu.common.response.impl.GoogleResponse;
 import pt.devhub.siu.core.bean.api.RequestManager;
 import us.monoid.web.JSONResource;
@@ -55,6 +56,12 @@ public class GoogleRequestManager implements RequestManager {
 			response = new GoogleResponse(apiDiscovery);
 		} catch (Exception e) {
 			logger.error("An error occurred during request processing", e);
+		}
+
+		// print google's response
+
+		for (Item item : ((GoogleResponse) response).getApiDiscovery().getItems()) {
+			logger.debug(item.toString());
 		}
 
 		return response;
