@@ -10,7 +10,7 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 
 import pt.devhub.siu.common.response.IResponse;
-import pt.devhub.siu.core.bean.api.RequestManager;
+import pt.devhub.siu.core.bean.api.IRequestManager;
 import pt.devhub.siu.service.ServiceProcessor;
 
 /**
@@ -29,8 +29,8 @@ public class GoogleServiceProcessor implements ServiceProcessor, Serializable {
 	@Inject
 	private Logger logger;
 
-	@EJB(lookup = "java:global/siu-core-ear/remote/GoogleRequestManager!pt.devhub.siu.core.bean.api.RequestManager")
-	private RequestManager requestManager;
+	@EJB(lookup = "java:global/siu-core-ear/remote/GoogleRequestManager!pt.devhub.siu.core.bean.api.IRequestManager")
+	private IRequestManager requestManager;
 
 	@Override
 	public IResponse processRequest() {

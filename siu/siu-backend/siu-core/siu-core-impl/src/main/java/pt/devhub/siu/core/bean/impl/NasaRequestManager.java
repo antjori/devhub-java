@@ -1,22 +1,17 @@
 package pt.devhub.siu.core.bean.impl;
 
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
 
 import pt.devhub.siu.common.response.IResponse;
 import pt.devhub.siu.common.response.impl.NasaResponse.NasaResponseBuilder;
-import pt.devhub.siu.core.bean.api.RequestManager;
-import us.monoid.web.JSONResource;
-import us.monoid.web.Resty;
 
 /**
  * Bean responsible for handling the requests and dispatch them to the NASA API.
  */
 @Stateless
-public class NasaRequestManager implements RequestManager {
+public class NasaRequestManager extends RequestManager {
 
 	/**
 	 * The serial version unique identifier.
@@ -25,10 +20,6 @@ public class NasaRequestManager implements RequestManager {
 
 	// NASA APOD request
 	private static final String APOD_REQUEST = "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY";
-
-	// The logger
-	@Inject
-	private Logger logger;
 
 	/**
 	 * Default constructor of the class.
@@ -40,8 +31,6 @@ public class NasaRequestManager implements RequestManager {
 	public IResponse processRequest() {
 		logger.info("Received a request and forwarding it to NASA's APOD service");
 
-		Resty resty = new Resty();
-		JSONResource jsonResource = null;
 		NasaResponseBuilder responseBuilder = null;
 
 		try {
@@ -50,18 +39,18 @@ public class NasaRequestManager implements RequestManager {
 			String mediaType = StringUtils.EMPTY;
 			String explanation = StringUtils.EMPTY;
 
-			jsonResource = resty.json(APOD_REQUEST);
+			executeRestCall(APOD_REQUEST);
 
-			if (jsonResource != null) {
-				url = (String) jsonResource.get("url");
+			if (restCallSuccessful()) {
+				url = getParameter("url");
 
 				logger.info("NASA's picture of the day URL: " + url);
 
 				responseBuilder = new NasaResponseBuilder(url);
-				title = (String) jsonResource.get("title");
-				mediaType = (String) jsonResource.get("media_type");
-				explanation = (String) jsonResource.get("explanation");
-				
+
+				title = getParameter("title");
+				mediaType = getParameter("media_type");
+				explanation = getParameter("explanation");				
 			}
 			
 			responseBuilder = new NasaResponseBuilder(url);
@@ -71,6 +60,8 @@ public class NasaRequestManager implements RequestManager {
 
 		} catch (Exception e) {
 			logger.error("An error occurred during request processing", e);
+		} finally {
+			invalidateRestCall();
 		}
 
 		return responseBuilder.build();

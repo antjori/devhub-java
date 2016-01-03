@@ -10,7 +10,7 @@ import pt.devhub.siu.common.response.IResponse;
  * Bean responsible for handling the request coming from the front-end.
  */
 @Remote
-public interface RequestManager extends Serializable {
+public interface IRequestManager extends Serializable {
 
 	IResponse processRequest();
 }
