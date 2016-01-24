@@ -12,7 +12,7 @@
 	<h3>Google's API Discovery Service</h3>
 	<p />
 	<ul>
-		<ui:repeat value=#{googleServiceController.googleApis} var="api">
+		<ui:repeat value="#{googleServiceController.googleApis}" var="api">
 			<li><h:link value="#{api.name}" /></li>
 		</ui:repeat>
 	</ul>

@@ -1,5 +1,6 @@
 package pt.devhub.siu.core.bean.impl;
 
+import javax.ejb.Remote;
 import javax.ejb.Stateless;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,12 +9,14 @@ import pt.devhub.siu.common.response.IResponse;
 import pt.devhub.siu.common.response.ext.google.ApiDiscovery;
 import pt.devhub.siu.common.response.ext.google.Item;
 import pt.devhub.siu.common.response.impl.GoogleResponse;
+import pt.devhub.siu.core.bean.api.IRequestManager;
 
 /**
  * Bean responsible for handling the requests and dispatch them to the Google
  * API.
  */
 @Stateless
+@Remote(IRequestManager.class)
 public class GoogleRequestManager extends RequestManager {
 
 	/**

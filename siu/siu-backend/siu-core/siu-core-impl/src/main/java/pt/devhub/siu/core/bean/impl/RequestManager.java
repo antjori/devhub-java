@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 
+import pt.devhub.siu.common.response.IResponse;
 import pt.devhub.siu.core.bean.api.IRequestManager;
 import us.monoid.web.JSONResource;
 import us.monoid.web.Resty;
@@ -30,11 +31,6 @@ public abstract class RequestManager implements IRequestManager {
 	protected JSONResource jsonResource;
 
 	/**
-	 * The Resty instance.
-	 */
-	private static Resty resty = new Resty();
-
-	/**
 	 * Executes the REST service call.
 	 * 
 	 * @param uri
@@ -43,7 +39,9 @@ public abstract class RequestManager implements IRequestManager {
 	 *             if an error occurs while executing the REST call
 	 */
 	protected void executeRestCall(final String uri) throws IOException {
-		this.jsonResource = resty.json(uri);
+		logger.info("Calling URI " + uri);
+		this.jsonResource = new Resty().json(uri);
+		logger.info("Result of the call to URI " + uri + ": " + restCallSuccessful());
 	}
 
 	/**
@@ -75,4 +73,9 @@ public abstract class RequestManager implements IRequestManager {
 	protected void invalidateRestCall() {
 		this.jsonResource = null;
 	}
+
+	/**
+	 * Declaration of the abstract method that executes the request processing.
+	 */
+	public abstract IResponse processRequest();
 }

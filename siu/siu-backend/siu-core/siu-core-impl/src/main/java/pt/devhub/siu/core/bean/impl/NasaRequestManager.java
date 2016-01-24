@@ -1,16 +1,19 @@
 package pt.devhub.siu.core.bean.impl;
 
+import javax.ejb.Remote;
 import javax.ejb.Stateless;
 
 import org.apache.commons.lang3.StringUtils;
 
 import pt.devhub.siu.common.response.IResponse;
 import pt.devhub.siu.common.response.impl.NasaResponse.NasaResponseBuilder;
+import pt.devhub.siu.core.bean.api.IRequestManager;
 
 /**
  * Bean responsible for handling the requests and dispatch them to the NASA API.
  */
 @Stateless
+@Remote(IRequestManager.class)
 public class NasaRequestManager extends RequestManager {
 
 	/**
@@ -50,9 +53,9 @@ public class NasaRequestManager extends RequestManager {
 
 				title = getParameter("title");
 				mediaType = getParameter("media_type");
-				explanation = getParameter("explanation");				
+				explanation = getParameter("explanation");
 			}
-			
+
 			responseBuilder = new NasaResponseBuilder(url);
 			responseBuilder.setTitle(title);
 			responseBuilder.setMediaType(mediaType);

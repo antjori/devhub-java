@@ -2,14 +2,11 @@ package pt.devhub.siu.core.bean.api;
 
 import java.io.Serializable;
 
-import javax.ejb.Remote;
-
 import pt.devhub.siu.common.response.IResponse;
 
 /**
- * Bean responsible for handling the request coming from the front-end.
+ * Bean responsible for handling the requests coming from the front-end.
  */
-@Remote
 public interface IRequestManager extends Serializable {
 
 	IResponse processRequest();
