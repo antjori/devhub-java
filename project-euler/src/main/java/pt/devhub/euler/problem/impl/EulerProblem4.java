@@ -12,7 +12,7 @@ import pt.devhub.euler.problem.IEulerProblem;
 public class EulerProblem4 implements IEulerProblem {
 
 	@Override
-	public void solveProbem() {
+	public void solveProblem() {
 		int start = 100;
 		int stop = 999;
 		int result = 0;

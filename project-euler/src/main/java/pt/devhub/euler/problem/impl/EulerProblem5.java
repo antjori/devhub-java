@@ -12,7 +12,7 @@ import pt.devhub.euler.problem.IEulerProblem;
 public class EulerProblem5 implements IEulerProblem {
 
 	@Override
-	public void solveProbem() {
+	public void solveProblem() {
 		boolean found = false;
 		long number = 0;
 

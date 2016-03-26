@@ -20,7 +20,7 @@ public class EulerProblem3 implements IEulerProblem {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void solveProbem() {
+	public void solveProblem() {
 		long sqrtTarget = (long) Math.sqrt(target);
 
 		for (long number = 1; number <= sqrtTarget; number = number + 2) {

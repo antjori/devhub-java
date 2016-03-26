@@ -21,6 +21,6 @@ public class EulerProblemSolver {
 	}
 
 	public static void main(String[] args) {
-		problems.forEach(problem -> problem.solveProbem());
+		problems.forEach(problem -> problem.solveProblem());
 	}
 }

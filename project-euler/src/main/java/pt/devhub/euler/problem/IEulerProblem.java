@@ -5,5 +5,5 @@ package pt.devhub.euler.problem;
  */
 public interface IEulerProblem {
 
-	void solveProbem();
+	void solveProblem();
 }
