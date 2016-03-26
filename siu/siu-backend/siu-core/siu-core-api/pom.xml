@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>pt.devhub.siu</groupId>
+		<groupId>pt.devhub.javaee.siu</groupId>
 		<artifactId>siu-core</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
