@@ -1,5 +1,6 @@
 package pt.devhub.euler.problem.impl;
 
+import pt.devhub.euler.problem.EulerProblemSolverUtil;
 import pt.devhub.euler.problem.IEulerProblem;
 
 /**
@@ -28,7 +29,7 @@ public class EulerProblem5 implements IEulerProblem {
 			}
 		}
 
-		System.out.println(number);
+		EulerProblemSolverUtil.printSolution(EulerProblem5.class, number);
 	}
 
 }

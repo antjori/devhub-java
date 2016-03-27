@@ -1,5 +1,6 @@
 package pt.devhub.euler.problem.impl;
 
+import pt.devhub.euler.problem.EulerProblemSolverUtil;
 import pt.devhub.euler.problem.IEulerProblem;
 
 /**
@@ -29,7 +30,7 @@ public class EulerProblem4 implements IEulerProblem {
 			start++;
 		}
 
-		System.out.println(result);
+		EulerProblemSolverUtil.printSolution(EulerProblem4.class, result);
 	}
 
 	private boolean isPalindrome(long product) {
