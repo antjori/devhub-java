@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.util.Properties;
 import java.util.TreeMap;
 
+import pt.devhub.euler.problem.EulerProblemSolverUtil;
 import pt.devhub.euler.problem.IEulerProblem;
 
 /**
@@ -53,7 +54,7 @@ public class EulerProblem8 implements IEulerProblem {
 			}
 		}
 
-		System.out.println(result);
+		EulerProblemSolverUtil.printSolution(this.getClass(), result);
 	}
 
 	private long getProduct(String number) {

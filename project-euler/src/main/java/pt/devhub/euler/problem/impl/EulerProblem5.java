@@ -19,7 +19,7 @@ public class EulerProblem5 implements IEulerProblem {
 
 		while (!found) {
 			found = true;
-			number++;
+			number+=2;
 
 			for (int it = 1; it <= 20; it++) {
 				if (number % it != 0) {

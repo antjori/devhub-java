@@ -3,6 +3,7 @@ package pt.devhub.euler.problem.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import pt.devhub.euler.problem.EulerProblemSolverUtil;
 import pt.devhub.euler.problem.IEulerProblem;
 
 /**
@@ -35,8 +36,8 @@ public class EulerProblem2 implements IEulerProblem {
 			current = result;
 		}
 
-		terms.forEach(term -> System.out.println(term));
-		System.out.println(even);
+//		terms.forEach(term -> System.out.println(term));
+		EulerProblemSolverUtil.printSolution(this.getClass(), even);
 	}
 
 }
