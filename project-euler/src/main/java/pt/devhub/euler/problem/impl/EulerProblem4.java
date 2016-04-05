@@ -30,7 +30,7 @@ public class EulerProblem4 implements IEulerProblem {
 			start++;
 		}
 
-		EulerProblemSolverUtil.printSolution(EulerProblem4.class, result);
+		EulerProblemSolverUtil.printSolution(getClass(), result);
 	}
 
 	private boolean isPalindrome(long product) {

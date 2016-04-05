@@ -36,7 +36,7 @@ public class EulerProblem3 implements IEulerProblem {
 		}
 
 		//primes.forEach(prime -> System.out.println(prime));
-		EulerProblemSolverUtil.printSolution(EulerProblem3.class, result);
+		EulerProblemSolverUtil.printSolution(getClass(), result);
 	}
 
 }

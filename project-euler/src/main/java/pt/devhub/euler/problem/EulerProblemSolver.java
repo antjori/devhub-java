@@ -12,7 +12,7 @@ public class EulerProblemSolver {
 
 	static {
 		try {
-			for (int problemNum = 1; problemNum <= 9; problemNum++) {
+			for (int problemNum = 1; problemNum <= 10; problemNum++) {
 				problems.add((IEulerProblem) Class.forName("pt.devhub.euler.problem.impl.EulerProblem" + problemNum)
 						.newInstance());
 			}

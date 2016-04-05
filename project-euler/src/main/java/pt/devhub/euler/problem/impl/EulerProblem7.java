@@ -23,6 +23,6 @@ public class EulerProblem7 implements IEulerProblem {
 			}
 		}
 
-		EulerProblemSolverUtil.printSolution(EulerProblem7.class, number);
+		EulerProblemSolverUtil.printSolution(getClass(), number);
 	}
 }

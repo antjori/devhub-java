@@ -30,7 +30,7 @@ public class EulerProblem6 implements IEulerProblem {
 			sum += start;
 		}
 
-		EulerProblemSolverUtil.printSolution(EulerProblem6.class, (sum * sum) - sumOfSquares);
+		EulerProblemSolverUtil.printSolution(getClass(), (sum * sum) - sumOfSquares);
 	}
 
 }

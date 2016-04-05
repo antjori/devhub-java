@@ -37,7 +37,7 @@ public class EulerProblem2 implements IEulerProblem {
 		}
 
 //		terms.forEach(term -> System.out.println(term));
-		EulerProblemSolverUtil.printSolution(this.getClass(), even);
+		EulerProblemSolverUtil.printSolution(getClass(), even);
 	}
 
 }

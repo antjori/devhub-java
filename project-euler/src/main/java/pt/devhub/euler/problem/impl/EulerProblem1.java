@@ -23,7 +23,7 @@ public class EulerProblem1 implements IEulerProblem {
 			}
 		}
 
-		EulerProblemSolverUtil.printSolution(this.getClass(), result);
+		EulerProblemSolverUtil.printSolution(getClass(), result);
 	}
 
 }

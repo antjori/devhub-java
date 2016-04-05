@@ -41,7 +41,7 @@ public class EulerProblem9 implements IEulerProblem {
 			c = (short) (1000 - a - b);
 		}
 
-		EulerProblemSolverUtil.printSolution(this.getClass(), (a*b*c));
+		EulerProblemSolverUtil.printSolution(getClass(), (a*b*c));
 	}
 
 	private boolean isPythagoreanTriplet(short a, short b, short c) {

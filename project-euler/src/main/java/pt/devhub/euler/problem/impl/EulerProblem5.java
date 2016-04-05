@@ -29,7 +29,7 @@ public class EulerProblem5 implements IEulerProblem {
 			}
 		}
 
-		EulerProblemSolverUtil.printSolution(EulerProblem5.class, number);
+		EulerProblemSolverUtil.printSolution(getClass(), number);
 	}
 
 }

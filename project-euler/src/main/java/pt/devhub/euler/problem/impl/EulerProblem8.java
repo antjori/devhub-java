@@ -54,7 +54,7 @@ public class EulerProblem8 implements IEulerProblem {
 			}
 		}
 
-		EulerProblemSolverUtil.printSolution(this.getClass(), result);
+		EulerProblemSolverUtil.printSolution(getClass(), result);
 	}
 
 	private long getProduct(String number) {
