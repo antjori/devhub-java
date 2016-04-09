@@ -1,10 +1,5 @@
 package pt.devhub.euler.problem.impl;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
-import java.util.TreeMap;
-
 import pt.devhub.euler.problem.EulerProblemSolverUtil;
 import pt.devhub.euler.problem.IEulerProblem;
 
@@ -20,26 +15,12 @@ public class EulerProblem8 implements IEulerProblem {
 	private static String DIGITS;
 
 	static {
-		InputStream inputStream = EulerProblem8.class.getClassLoader()
-				.getResourceAsStream(EulerProblem8.class.getSimpleName().toLowerCase() + ".properties");
-		Properties properties = new Properties();
-
-		try {
-			properties.load(inputStream);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		TreeMap<Object, Object> digitsMap = new TreeMap<>(properties);
-		StringBuilder builder = new StringBuilder();
-
-		for (Object key : digitsMap.keySet()) {
-			builder.append(properties.getProperty((String) key));
-		}
-
-		DIGITS = builder.toString();
+		DIGITS = EulerProblemSolverUtil.loadPropertiesAsString(EulerProblem8.class);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void solveProblem() {
 		long result = 0;

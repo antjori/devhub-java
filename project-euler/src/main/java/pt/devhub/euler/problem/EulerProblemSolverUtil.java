@@ -1,5 +1,11 @@
 package pt.devhub.euler.problem;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Map;
+import java.util.Properties;
+import java.util.TreeMap;
+
 /**
  * The utility class for the Euler problem solver.
  */
@@ -48,5 +54,43 @@ public final class EulerProblemSolverUtil {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Loads a properties file.
+	 * 
+	 * @param clazz
+	 *            the current executing class
+	 * @return a Map with the contents of the loaded properties file
+	 */
+	public static final Map<Object, Object> loadProperties(Class<? extends IEulerProblem> clazz) {
+		InputStream inputStream = clazz.getClassLoader()
+				.getResourceAsStream(clazz.getSimpleName().toLowerCase() + ".properties");
+		Properties properties = new Properties();
+
+		try {
+			properties.load(inputStream);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return new TreeMap<>(properties);
+	}
+
+	/**
+	 * Loads a properties file and concatenates its contents into a string.
+	 * 
+	 * @param clazz
+	 *            the current executing class
+	 * @return a String representative of the contents of the loaded properties
+	 *         file
+	 */
+	public static final String loadPropertiesAsString(Class<? extends IEulerProblem> clazz) {
+		Map<Object, Object> digitsMap = loadProperties(clazz);
+		StringBuilder builder = new StringBuilder();
+
+		digitsMap.keySet().forEach(key -> builder.append(digitsMap.get((String) key)));
+
+		return builder.toString();
 	}
 }

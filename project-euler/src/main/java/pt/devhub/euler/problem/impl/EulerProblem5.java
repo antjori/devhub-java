@@ -12,6 +12,9 @@ import pt.devhub.euler.problem.IEulerProblem;
  */
 public class EulerProblem5 implements IEulerProblem {
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void solveProblem() {
 		boolean found = false;

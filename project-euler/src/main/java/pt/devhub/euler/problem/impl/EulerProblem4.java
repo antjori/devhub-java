@@ -12,6 +12,9 @@ import pt.devhub.euler.problem.IEulerProblem;
  */
 public class EulerProblem4 implements IEulerProblem {
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void solveProblem() {
 		int start = 100;

@@ -11,6 +11,9 @@ import pt.devhub.euler.problem.IEulerProblem;
  */
 public class EulerProblem7 implements IEulerProblem {
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void solveProblem() {
 		int nPrimes = 1;

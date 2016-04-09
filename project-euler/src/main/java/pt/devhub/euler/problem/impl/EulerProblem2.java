@@ -18,6 +18,9 @@ import pt.devhub.euler.problem.IEulerProblem;
  */
 public class EulerProblem2 implements IEulerProblem {
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void solveProblem() {
 		int prev = 1;

@@ -5,5 +5,8 @@ package pt.devhub.euler.problem;
  */
 public interface IEulerProblem {
 
+	/**
+	 * Euler problem solver.
+	 */
 	void solveProblem();
 }
