@@ -14,10 +14,23 @@ import pt.devhub.euler.problem.IEulerProblem;
  */
 public class EulerProblem11 implements IEulerProblem {
 
-	private int[][] grid = new int[20][20];
+	private static int[][] grid = new int[20][20];
 
 	static {
 		Map<Object, Object> digits = EulerProblemSolverUtil.loadProperties(EulerProblem11.class);
+
+		int line = 0;
+
+		digits.keySet().forEach(key -> {
+			String[] digitsInLine = ((String) digits.get(key)).split("\\s+");
+
+			int column = 0;
+
+			for (String digit : digitsInLine) {
+				grid[line][column] = Integer.parseInt(digit);
+				column++;
+			}
+		});
 	}
 
 	/**
@@ -25,8 +38,7 @@ public class EulerProblem11 implements IEulerProblem {
 	 */
 	@Override
 	public void solveProblem() {
-		// TODO Auto-generated method stub
-
+		System.out.println(grid.length);
 	}
 
 }
