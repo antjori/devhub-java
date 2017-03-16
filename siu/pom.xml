@@ -94,7 +94,7 @@
 				<version>${org.richfaces.version}</version>
 			</dependency>
 
-			<!-- GENERAL DEPENDENCIES -->
+			<!-- GENERIC DEPENDENCIES -->
 
 			<!-- Commons Lang3 -->
 			<dependency>
