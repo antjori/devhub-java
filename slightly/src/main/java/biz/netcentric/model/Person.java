@@ -1,4 +1,4 @@
-package biz.netcentric;
+package biz.netcentric.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
