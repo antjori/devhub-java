@@ -54,7 +54,6 @@
 					<scanIntervalSeconds>10</scanIntervalSeconds>
 				</configuration>
 			</plugin>
-
 		</plugins>
 	</build>
 
@@ -103,7 +102,7 @@
 
 	<dependencies>
 
-        <!-- javaee.api -->
+		<!-- javaee.api -->
 		<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-api</artifactId>
@@ -130,6 +129,7 @@
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-core</artifactId>
 		</dependency>
+
 	</dependencies>
 
 </project>
