@@ -1,4 +1,4 @@
-package biz.netcentric.servlet;
+package biz.netcentric;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,6 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The Slightly servlet.
+ * 
+ * A Java servlet that responds to requests for HTML files. The servlet reads
+ * the requested file, parses the HTML, and processes the server-side javascript
+ * and server-side data-attributes, and finally sends the resulting HTML to the
+ * browser.
+ */
 @WebServlet(description = "Slightly Servlet", loadOnStartup = 1, name = "slightlyServlet", urlPatterns = { "*.html" })
 public class SlightlyServlet extends HttpServlet {
 
@@ -22,10 +30,12 @@ public class SlightlyServlet extends HttpServlet {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(SlightlyServlet.class);
 
+	private SlightlyParser parser;
+
 	@Override
 	public void init() throws ServletException {
-		super.init();
 		LOGGER.info("Entered on init() method");
+		parser = new SlightlyParser();
 	}
 
 	@Override
@@ -46,19 +56,5 @@ public class SlightlyServlet extends HttpServlet {
 				writer.close();
 			}
 		}
-	}
-
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		super.doPost(request, response);
-		LOGGER.info("Entered on doPost() method");
-	}
-
-	@Override
-	protected void service(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		super.service(request, response);
-		LOGGER.info("Entered on service() method");
 	}
 }
