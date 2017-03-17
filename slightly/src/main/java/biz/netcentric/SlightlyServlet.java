@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * The Slightly servlet.
- * 
+ *
  * A Java servlet that responds to requests for HTML files. The servlet reads
  * the requested file, parses the HTML, and processes the server-side javascript
  * and server-side data-attributes, and finally sends the resulting HTML to the
@@ -30,12 +30,9 @@ public class SlightlyServlet extends HttpServlet {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(SlightlyServlet.class);
 
-	private SlightlyParser parser;
-
 	@Override
 	public void init() throws ServletException {
 		LOGGER.info("Entered on init() method");
-		parser = new SlightlyParser();
 	}
 
 	@Override
@@ -43,6 +40,10 @@ public class SlightlyServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		LOGGER.info("Entered on doGet() method");
+
+		SlightlyParser parser = new SlightlyParser(request.getServletContext());
+		parser.parse();
+
 		PrintWriter writer = null;
 
 		try {
