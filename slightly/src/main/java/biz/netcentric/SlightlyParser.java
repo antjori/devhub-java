@@ -3,6 +3,10 @@ package biz.netcentric;
 import java.io.File;
 import java.io.IOException;
 
+import javax.script.Invocable;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import javax.servlet.ServletContext;
 
 import org.jsoup.Jsoup;
@@ -26,10 +30,30 @@ public class SlightlyParser {
 	}
 
 	public void parse() {
-		Elements scripting = document.getElementsByTag("script");
-		Elements head = document.getElementsByTag("head");
-		Elements body = document.getElementsByTag("body");
+		Elements script = document.getElementsByTag("script");
 
-		body.stream().forEach(element -> LOGGER.info(element.toString()));
+		if (script.hasAttr("type") && (script.attr("type").equals("server/javascript"))) {
+			ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
+
+			script.first().children().forEach(element -> {
+				try {
+					engine.eval(element.toString());
+					engine.get
+				} catch (ScriptException se) {
+					LOGGER.error("An error occurred while processing Javascript code", se);
+				}
+
+				Invocable invocable = (Invocable) engine;
+				invocable.
+			});
+
+			LOGGER.warn(script.first().html());
+		}
+
+		Elements head = document.getElementsByTag("head");
+//		head.stream().forEach(element -> LOGGER.info(element.toString()));
+
+		Elements body = document.getElementsByTag("body");
+//		body.stream().forEach(element -> LOGGER.info(element.toString()));
 	}
 }
