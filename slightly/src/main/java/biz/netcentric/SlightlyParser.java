@@ -2,21 +2,25 @@ package biz.netcentric;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.text.WordUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
+import org.jsoup.select.NodeVisitor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,56 +29,103 @@ public class SlightlyParser {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SlightlyParser.class);
 
 	private static Document document;
+	private static Pattern pattern;
 
+	private HttpServletRequest request;
 	private Map<String, Object> instanceMap;
 
-	public SlightlyParser(ServletContext context) throws IOException {
+	static {
+		pattern = Pattern.compile(SlightlyParserUtil.DOLLAR_EXPRESSION_PATTERN);
+	}
+
+	/**
+	 * Constructor of this class.
+	 *
+	 * @param request
+	 *            the HTTP servlet request
+	 * @throws IOException
+	 *             if an error occurs while parsing the HTML document
+	 */
+	public SlightlyParser(final HttpServletRequest request) throws IOException {
+		setRequest(request);
+
+		setInstanceMap(new TreeMap<>());
+
 		if (document == null) {
-			String path = context.getRealPath("index.html");
+			String path = request.getServletContext().getRealPath("index.html");
 
 			document = Jsoup.parse(new File(path), SlightlyParserUtil.ENCODING);
 		}
-
-		setInstanceMap(new TreeMap<>());
 	}
 
-	public String parse(final HttpServletRequest request) {
+	public String parse() {
 
 		if (request.getParameterMap().isEmpty()) {
 			return StringUtils.EMPTY;
 		}
 
-		StringBuilder responseContent = new StringBuilder();
+		// builds map of instances
+		buildInstanceMap();
 
-		// builds the map of Java instances from the script element
-		buildInstanceMap(request);
-
+		// removes the script element
 		Document newDocument = document.clone();
 		newDocument.getElementsByTag(SlightlyParserUtil.SCRIPT).remove();
-		LOGGER.error(newDocument.html());
 
-		for (Element element : newDocument.getElementsContainingOwnText("$")) {
-			LOGGER.debug(element.toString());
-			element.replaceWith();
-		}
+		// traverses the new document without the script element
+		newDocument.traverse(new NodeVisitor() {
 
-		Elements head = document.getElementsByTag("head");
-		// head.stream().forEach(element -> LOGGER.info(element.toString()));
+			@Override
+			public void tail(Node node, int depth) {
+				// Do nothing
+				LOGGER.info("Exiting tag: " + node.nodeName());
+			}
 
-		Elements body = document.getElementsByTag("body");
-		// body.stream().forEach(element -> LOGGER.info(element.toString()));
+			@Override
+			public void head(Node node, int depth) {
+				LOGGER.info("Entering tag: " + node.nodeName());
+				LOGGER.warn(node.nodeName() + ": " + node.toString());
+				LOGGER.error(node.nodeName() + " depth: " + depth);
 
-		return responseContent.toString();
+				processDollarExpressions(node);
+			}
+		});
+
+		// builds the map of Java instances from the script element
+		// buildInstanceMap(request);
+
+		/*
+		 * Elements head = document.getElementsByTag(SlightlyParserUtil.HEAD);
+		 * head.traverse(new NodeVisitor() {
+		 *
+		 * @Override public void tail(Node node, int depth) { LOGGER.info(
+		 * "Exiting tag: " + node.nodeName()); }
+		 *
+		 * @Override public void head(Node node, int depth) { LOGGER.info(
+		 * "Entering tag: " + node.nodeName()); LOGGER.info(node.toString()); }
+		 * });
+		 *
+		 * Elements body = document.getElementsByTag(SlightlyParserUtil.BODY);
+		 * body.traverse(new NodeVisitor() {
+		 *
+		 * @Override public void tail(Node node, int depth) { LOGGER.info(
+		 * "Exiting tag: " + node.nodeName()); }
+		 *
+		 * @Override public void head(Node node, int depth) { LOGGER.info(
+		 * "Entering tag: " + node.nodeName()); LOGGER.info(node.toString()); }
+		 * });
+		 */
+
+		return newDocument.toString();
 	}
 
 	/**
 	 * Builds a map containing all Java instances created during the evaluation
 	 * of the script element.
-	 * 
+	 *
 	 * @param request
 	 *            the HTTP servlet request
 	 */
-	private void buildInstanceMap(final HttpServletRequest request) {
+	private void buildInstanceMap() {
 		Elements script = document.getElementsByTag(SlightlyParserUtil.SCRIPT);
 
 		if (script.hasAttr(SlightlyParserUtil.SCRIPT_TYPE)
@@ -83,14 +134,14 @@ public class SlightlyParser {
 
 			try {
 				engine.eval(SlightlyParserUtil.ENABLE_RHINO);
-				engine.put(SlightlyParserUtil.HTTP_REQUEST, request);
+				engine.put(SlightlyParserUtil.HTTP_REQUEST, this.request);
 				engine.eval(script.first().html());
 
 				engine.getBindings(ScriptContext.ENGINE_SCOPE).keySet().forEach(key -> {
 					Class<?> clazz = engine.get(key).getClass();
 
 					if (classExists(clazz)) {
-						instanceMap.put(key, engine.get(key));
+						this.instanceMap.put(key, engine.get(key));
 					}
 				});
 			} catch (ScriptException se) {
@@ -118,6 +169,60 @@ public class SlightlyParser {
 		}
 
 		return result;
+	}
+
+	private void processDollarExpressions(final Node node) {
+		node.attributes().forEach(attribute -> {
+			String attrValue = attribute.getValue();
+			Matcher matcher = pattern.matcher(attrValue);
+
+			if (matcher.find()) {
+				String expression = matcher.group();
+				String[] javaElems = matcher.group(1).split("\\.");
+
+				if (javaElems.length == 2) {
+					String javaElem = javaElems[0];
+					String javaAttr = javaElems[1];
+
+					if (instanceMap.containsKey(javaElem)) {
+						String result = String.valueOf(processMethodInvocation(javaElem, javaAttr));
+						attribute.setValue(attrValue.replace(expression, result));
+					}
+				}
+			}
+		});
+	}
+
+	private Object processMethodInvocation(final String instanceName, final String instanceAttribute) {
+		Object result = null;
+		Object instance = instanceMap.get(instanceName);
+
+		try {
+			Method method = instance.getClass().getMethod("get" + WordUtils.capitalize(instanceAttribute),
+					new Class[] {});
+			result = String.valueOf(method.invoke(instance, (Object[]) null));
+		} catch (NoSuchMethodException nsme) {
+			LOGGER.error("An error occurred while trying to attain a method of " + instance.getClass().getName(), nsme);
+		} catch (ReflectiveOperationException roe) {
+			LOGGER.error("An error occurred while trying to invoke a method on " + instance.getClass().getName(), roe);
+		}
+
+		return result;
+	}
+
+	/**
+	 * @return the request
+	 */
+	public HttpServletRequest getRequest() {
+		return request;
+	}
+
+	/**
+	 * @param request
+	 *            the request to set
+	 */
+	public void setRequest(HttpServletRequest request) {
+		this.request = request;
 	}
 
 	/**

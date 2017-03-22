@@ -31,27 +31,16 @@ public class SlightlyServlet extends HttpServlet {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SlightlyServlet.class);
 
 	@Override
-	public void init() throws ServletException {
-		LOGGER.info("Entered on init() method");
-	}
-
-	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		LOGGER.info("Entered on doGet() method");
-
-		SlightlyParser parser = new SlightlyParser(request.getServletContext());
-		String responseContent = parser.parse(request);
-
-		LOGGER.info(responseContent);
+		SlightlyParser parser = new SlightlyParser(request);
+		String responseContent = parser.parse();
 
 		PrintWriter writer = null;
 
 		try {
 			writer = response.getWriter();
-
-			writer.println("<!DOCTYPE html><html><title>Slightly</title></html>");
+			writer.println(responseContent);
 		} catch (IOException e) {
 			LOGGER.error("An error occurred while writting servlet response", e);
 		} finally {
