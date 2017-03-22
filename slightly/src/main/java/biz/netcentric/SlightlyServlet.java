@@ -42,7 +42,9 @@ public class SlightlyServlet extends HttpServlet {
 		LOGGER.info("Entered on doGet() method");
 
 		SlightlyParser parser = new SlightlyParser(request.getServletContext());
-		parser.parse(request);
+		String responseContent = parser.parse(request);
+
+		LOGGER.info(responseContent);
 
 		PrintWriter writer = null;
 

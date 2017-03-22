@@ -12,8 +12,10 @@ import javax.script.ScriptException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +26,7 @@ public class SlightlyParser {
 
 	private static Document document;
 
-	private Map<String, Class<?>> classMap;
+	private Map<String, Object> instanceMap;
 
 	public SlightlyParser(ServletContext context) throws IOException {
 		if (document == null) {
@@ -33,48 +35,68 @@ public class SlightlyParser {
 			document = Jsoup.parse(new File(path), SlightlyParserUtil.ENCODING);
 		}
 
-		setClassMap(new TreeMap<>());
+		setInstanceMap(new TreeMap<>());
 	}
 
-	public void parse(final HttpServletRequest request) {
-		Elements script = document.getElementsByTag("script");
+	public String parse(final HttpServletRequest request) {
 
-		if (script.hasAttr(SlightlyParserUtil.SCRIPT_TYPE)
-				&& (script.attr(SlightlyParserUtil.SCRIPT_TYPE).equals(SlightlyParserUtil.SCRIPT_TYPE_VAL))) {
-			ScriptEngine engine = new ScriptEngineManager().getEngineByName(SlightlyParserUtil.JS_ENGINE);
-
-			/*
-			 * script.first().children().forEach(element -> { try { Object
-			 * result = engine.eval(element.toString());
-			 * LOGGER.info(result.toString());
-			 * LOGGER.info(result.getClass().getName()); } catch
-			 * (ScriptException se) { LOGGER.error(
-			 * "An error occurred while processing Javascript code", se); } });
-			 */
-
-			try {
-				engine.eval(SlightlyParserUtil.ENABLE_RHINO);
-				engine.put("request", request);
-				engine.eval(script.first().html());
-
-				engine.getBindings(ScriptContext.ENGINE_SCOPE).keySet().forEach(key -> {
-					Class<?> clazz = engine.get(key).getClass();
-					if (classExists(clazz)) {
-						classMap.put(key, clazz);
-					}
-				});
-			} catch (ScriptException se) {
-				LOGGER.error("An error occurred while processing Javascript code", se);
-			}
+		if (request.getParameterMap().isEmpty()) {
+			return StringUtils.EMPTY;
 		}
 
-		classMap.keySet().forEach(key -> LOGGER.info(key));
+		StringBuilder responseContent = new StringBuilder();
+
+		// builds the map of Java instances from the script element
+		buildInstanceMap(request);
+
+		Document newDocument = document.clone();
+		newDocument.getElementsByTag(SlightlyParserUtil.SCRIPT).remove();
+		LOGGER.error(newDocument.html());
+
+		for (Element element : newDocument.getElementsContainingOwnText("$")) {
+			LOGGER.debug(element.toString());
+			element.replaceWith();
+		}
 
 		Elements head = document.getElementsByTag("head");
 		// head.stream().forEach(element -> LOGGER.info(element.toString()));
 
 		Elements body = document.getElementsByTag("body");
 		// body.stream().forEach(element -> LOGGER.info(element.toString()));
+
+		return responseContent.toString();
+	}
+
+	/**
+	 * Builds a map containing all Java instances created during the evaluation
+	 * of the script element.
+	 * 
+	 * @param request
+	 *            the HTTP servlet request
+	 */
+	private void buildInstanceMap(final HttpServletRequest request) {
+		Elements script = document.getElementsByTag(SlightlyParserUtil.SCRIPT);
+
+		if (script.hasAttr(SlightlyParserUtil.SCRIPT_TYPE)
+				&& (script.attr(SlightlyParserUtil.SCRIPT_TYPE).equals(SlightlyParserUtil.SCRIPT_TYPE_VAL))) {
+			ScriptEngine engine = new ScriptEngineManager().getEngineByName(SlightlyParserUtil.JS_ENGINE);
+
+			try {
+				engine.eval(SlightlyParserUtil.ENABLE_RHINO);
+				engine.put(SlightlyParserUtil.HTTP_REQUEST, request);
+				engine.eval(script.first().html());
+
+				engine.getBindings(ScriptContext.ENGINE_SCOPE).keySet().forEach(key -> {
+					Class<?> clazz = engine.get(key).getClass();
+
+					if (classExists(clazz)) {
+						instanceMap.put(key, engine.get(key));
+					}
+				});
+			} catch (ScriptException se) {
+				LOGGER.error("An error occurred while processing Javascript code", se);
+			}
+		}
 	}
 
 	/**
@@ -99,17 +121,17 @@ public class SlightlyParser {
 	}
 
 	/**
-	 * @return the classMap
+	 * @return the instanceMap
 	 */
-	public Map<String, Class<?>> getClassMap() {
-		return classMap;
+	public Map<String, Object> getInstanceMap() {
+		return instanceMap;
 	}
 
 	/**
-	 * @param classMap
-	 *            the classMap to set
+	 * @param instanceMap
+	 *            the instanceMap to set
 	 */
-	public void setClassMap(Map<String, Class<?>> classMap) {
-		this.classMap = classMap;
+	public void setInstanceMap(Map<String, Object> instanceMap) {
+		this.instanceMap = instanceMap;
 	}
 }
