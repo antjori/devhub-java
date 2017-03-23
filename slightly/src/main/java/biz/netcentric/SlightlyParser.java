@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -168,9 +169,23 @@ public class SlightlyParser {
 
 		// checks each attribute
 		node.attributes().forEach(attribute -> {
-			LOGGER.info("processing node: " + node.toString());
+			// process data-for-x
+			Collection<? extends Object> collection = processDataForX(attribute);
+
+			if (collection != null) {
+				String variableName = attribute.getKey().replaceFirst(SlightlyParserUtil.DATA_FOR_X, StringUtils.EMPTY);
+
+				collection.forEach(object -> {
+					Node newNode = node.clone();
+					node.after(newNode.removeAttr(attribute.getKey()).toString()
+							.replace("\\$\\{" + variableName + "\\}", object.toString()));
+				});
+
+				nodesToRemove.add(node);
+			}
+
 			// process data-if
-			Boolean result = processDataIf(node, attribute);
+			Boolean result = processDataIf(attribute);
 
 			if (result != null) {
 				if (result) {
@@ -184,14 +199,34 @@ public class SlightlyParser {
 			processDollarExpressions(attribute);
 		});
 
-		// cannot remove attribute during check: ConcurrentModificationException occurs
+		// cannot remove attribute during check: ConcurrentModificationException
+		// occurs
 		attrsToRemove.forEach(attributeKey -> node.removeAttr(attributeKey));
 	}
 
-	private Boolean processDataIf(final Node node, final Attribute attribute) {
+	private Collection<?> processDataForX(final Attribute attribute) {
+		Collection<?> collection = null;
+
+		if (attribute != null && attribute.getKey().startsWith(SlightlyParserUtil.DATA_FOR_X)) {
+			String[] javaElems = attribute.getValue().split("\\.");
+
+			if (javaElems.length >= 2 && instanceMap.containsKey(javaElems[0])) {
+				String javaElem = javaElems[0];
+				String javaAttr = javaElems[1];
+
+				if (instanceMap.containsKey(javaElem)) {
+					collection = (Collection<?>) processMethodInvocation(javaElem, javaAttr, MethodType.GET);
+				}
+			}
+		}
+
+		return collection;
+	}
+
+	private Boolean processDataIf(final Attribute attribute) {
 		Boolean result = null;
 
-		if (attribute.getKey().matches(SlightlyParserUtil.DATA_IF)) {
+		if ((attribute != null) && attribute.getKey().matches(SlightlyParserUtil.DATA_IF)) {
 			String[] javaElems = attribute.getValue().split("\\.");
 
 			if (javaElems.length >= 2) {
@@ -216,14 +251,12 @@ public class SlightlyParser {
 				String expression = matcher.group();
 				String[] javaElems = matcher.group(1).split("\\.");
 
-				if (javaElems.length >= 2) {
+				if (javaElems.length >= 2 && instanceMap.containsKey(javaElems[0])) {
 					String javaElem = javaElems[0];
 					String javaAttr = javaElems[1];
 
-					if (instanceMap.containsKey(javaElem)) {
-						String result = String.valueOf(processMethodInvocation(javaElem, javaAttr, MethodType.GET));
-						attribute.setValue(attrValue.replace(expression, StringEscapeUtils.escapeHtml4(result)));
-					}
+					String result = String.valueOf(processMethodInvocation(javaElem, javaAttr, MethodType.GET));
+					attribute.setValue(attrValue.replace(expression, StringEscapeUtils.escapeHtml4(result)));
 				}
 			}
 		}
