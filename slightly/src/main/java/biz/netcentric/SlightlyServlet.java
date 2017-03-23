@@ -42,7 +42,7 @@ public class SlightlyServlet extends HttpServlet {
 			writer = response.getWriter();
 			writer.println(responseContent);
 		} catch (IOException e) {
-			LOGGER.error("An error occurred while writting servlet response", e);
+			LOGGER.error("An error occurred while writing servlet response", e);
 		} finally {
 			if (writer != null) {
 				writer.close();

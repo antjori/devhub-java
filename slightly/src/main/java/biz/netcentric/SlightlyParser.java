@@ -177,8 +177,10 @@ public class SlightlyParser {
 
 				collection.forEach(object -> {
 					Node newNode = node.clone();
-					node.after(newNode.removeAttr(attribute.getKey()).toString()
-							.replace("\\$\\{" + variableName + "\\}", object.toString()));
+					newNode.removeAttr(attribute.getKey());
+					String html = newNode.toString().replace(
+							String.format(SlightlyParserUtil.DATA_FOR_X_PATTERN, variableName), object.toString());
+					node.before(html);
 				});
 
 				nodesToRemove.add(node);

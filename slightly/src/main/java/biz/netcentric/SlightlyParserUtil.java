@@ -23,6 +23,7 @@ public final class SlightlyParserUtil {
 	public static final String DATA_FOR_X = "data-for-";
 
 	public static final String DOLLAR_EXPRESSION_PATTERN = "\\$\\{(.*?)\\}";
+	public static final String DATA_FOR_X_PATTERN = "${%s}";
 
 	/**
 	 * Private constructor used to hide the implicit public one
