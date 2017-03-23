@@ -3,6 +3,8 @@ package biz.netcentric;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
@@ -14,9 +16,11 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Attribute;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
@@ -29,13 +33,21 @@ public class SlightlyParser {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SlightlyParser.class);
 
 	private static Document document;
-	private static Pattern pattern;
+	private static Pattern dollarExpressionPattern;
 
 	private HttpServletRequest request;
 	private Map<String, Object> instanceMap;
+	private List<Node> nodesToRemove;
+
+	/**
+	 * Enumeration for the possible types of Java methods.s
+	 */
+	protected enum MethodType {
+		GET, SET, IS;
+	}
 
 	static {
-		pattern = Pattern.compile(SlightlyParserUtil.DOLLAR_EXPRESSION_PATTERN);
+		dollarExpressionPattern = Pattern.compile(SlightlyParserUtil.DOLLAR_EXPRESSION_PATTERN);
 	}
 
 	/**
@@ -51,6 +63,8 @@ public class SlightlyParser {
 
 		setInstanceMap(new TreeMap<>());
 
+		setNodesToRemove(new ArrayList<>());
+
 		if (document == null) {
 			String path = request.getServletContext().getRealPath("index.html");
 
@@ -64,7 +78,7 @@ public class SlightlyParser {
 			return StringUtils.EMPTY;
 		}
 
-		// builds map of instances
+		// builds map of Java instances from the script element
 		buildInstanceMap();
 
 		// removes the script element
@@ -86,34 +100,12 @@ public class SlightlyParser {
 				LOGGER.warn(node.nodeName() + ": " + node.toString());
 				LOGGER.error(node.nodeName() + " depth: " + depth);
 
-				processDollarExpressions(node);
+				processNode(node);
 			}
 		});
 
-		// builds the map of Java instances from the script element
-		// buildInstanceMap(request);
-
-		/*
-		 * Elements head = document.getElementsByTag(SlightlyParserUtil.HEAD);
-		 * head.traverse(new NodeVisitor() {
-		 *
-		 * @Override public void tail(Node node, int depth) { LOGGER.info(
-		 * "Exiting tag: " + node.nodeName()); }
-		 *
-		 * @Override public void head(Node node, int depth) { LOGGER.info(
-		 * "Entering tag: " + node.nodeName()); LOGGER.info(node.toString()); }
-		 * });
-		 *
-		 * Elements body = document.getElementsByTag(SlightlyParserUtil.BODY);
-		 * body.traverse(new NodeVisitor() {
-		 *
-		 * @Override public void tail(Node node, int depth) { LOGGER.info(
-		 * "Exiting tag: " + node.nodeName()); }
-		 *
-		 * @Override public void head(Node node, int depth) { LOGGER.info(
-		 * "Entering tag: " + node.nodeName()); LOGGER.info(node.toString()); }
-		 * });
-		 */
+		// removes nodes previously marked to be removed
+		nodesToRemove.forEach(node -> node.remove());
 
 		return newDocument.toString();
 	}
@@ -171,36 +163,81 @@ public class SlightlyParser {
 		return result;
 	}
 
-	private void processDollarExpressions(final Node node) {
+	private void processNode(final Node node) {
+		List<String> attrsToRemove = new ArrayList<>();
+
+		// checks each attribute
 		node.attributes().forEach(attribute -> {
+			LOGGER.info("processing node: " + node.toString());
+			// process data-if
+			Boolean result = processDataIf(node, attribute);
+
+			if (result != null) {
+				if (result) {
+					attrsToRemove.add(attribute.getKey());
+				} else {
+					nodesToRemove.add(node);
+				}
+			}
+
+			// process $-expression
+			processDollarExpressions(attribute);
+		});
+
+		// cannot remove attribute during check: ConcurrentModificationException occurs
+		attrsToRemove.forEach(attributeKey -> node.removeAttr(attributeKey));
+	}
+
+	private Boolean processDataIf(final Node node, final Attribute attribute) {
+		Boolean result = null;
+
+		if (attribute.getKey().matches(SlightlyParserUtil.DATA_IF)) {
+			String[] javaElems = attribute.getValue().split("\\.");
+
+			if (javaElems.length >= 2) {
+				String javaElem = javaElems[0];
+				String javaAttr = javaElems[1];
+
+				if (instanceMap.containsKey(javaElem)) {
+					result = (boolean) processMethodInvocation(javaElem, javaAttr, MethodType.IS);
+				}
+			}
+		}
+
+		return result;
+	}
+
+	private void processDollarExpressions(final Attribute attribute) {
+		if (attribute != null) {
 			String attrValue = attribute.getValue();
-			Matcher matcher = pattern.matcher(attrValue);
+			Matcher matcher = dollarExpressionPattern.matcher(attrValue);
 
 			if (matcher.find()) {
 				String expression = matcher.group();
 				String[] javaElems = matcher.group(1).split("\\.");
 
-				if (javaElems.length == 2) {
+				if (javaElems.length >= 2) {
 					String javaElem = javaElems[0];
 					String javaAttr = javaElems[1];
 
 					if (instanceMap.containsKey(javaElem)) {
-						String result = String.valueOf(processMethodInvocation(javaElem, javaAttr));
-						attribute.setValue(attrValue.replace(expression, result));
+						String result = String.valueOf(processMethodInvocation(javaElem, javaAttr, MethodType.GET));
+						attribute.setValue(attrValue.replace(expression, StringEscapeUtils.escapeHtml4(result)));
 					}
 				}
 			}
-		});
+		}
 	}
 
-	private Object processMethodInvocation(final String instanceName, final String instanceAttribute) {
+	private Object processMethodInvocation(final String instanceName, final String instanceAttribute,
+			final MethodType type) {
 		Object result = null;
 		Object instance = instanceMap.get(instanceName);
 
 		try {
-			Method method = instance.getClass().getMethod("get" + WordUtils.capitalize(instanceAttribute),
-					new Class[] {});
-			result = String.valueOf(method.invoke(instance, (Object[]) null));
+			Method method = instance.getClass()
+					.getMethod(type.name().toLowerCase() + WordUtils.capitalize(instanceAttribute), new Class[] {});
+			result = method.invoke(instance, (Object[]) null);
 		} catch (NoSuchMethodException nsme) {
 			LOGGER.error("An error occurred while trying to attain a method of " + instance.getClass().getName(), nsme);
 		} catch (ReflectiveOperationException roe) {
@@ -238,5 +275,20 @@ public class SlightlyParser {
 	 */
 	public void setInstanceMap(Map<String, Object> instanceMap) {
 		this.instanceMap = instanceMap;
+	}
+
+	/**
+	 * @return the nodesToRemove
+	 */
+	public List<Node> getNodesToRemove() {
+		return nodesToRemove;
+	}
+
+	/**
+	 * @param nodesToRemove
+	 *            the nodesToRemove to set
+	 */
+	public void setNodesToRemove(List<Node> nodesToRemove) {
+		this.nodesToRemove = nodesToRemove;
 	}
 }

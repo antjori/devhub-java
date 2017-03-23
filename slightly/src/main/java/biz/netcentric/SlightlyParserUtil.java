@@ -19,6 +19,7 @@ public final class SlightlyParserUtil {
 	// Slightly constants
 	public static final String HTTP_REQUEST = "request";
 	public static final String SLIGHTLY_PACKAGE = "biz.netcentric.";
+	public static final String DATA_IF = "data-if";
 
 	public static final String DOLLAR_EXPRESSION_PATTERN = "\\$\\{(.*?)\\}";
 
