@@ -36,17 +36,10 @@ public class SlightlyServlet extends HttpServlet {
 		SlightlyParser parser = new SlightlyParser(request);
 		String responseContent = parser.parse();
 
-		PrintWriter writer = null;
-
-		try {
-			writer = response.getWriter();
+		try (PrintWriter writer = response.getWriter()) {
 			writer.println(responseContent);
 		} catch (IOException e) {
 			LOGGER.error("An error occurred while writing servlet response", e);
-		} finally {
-			if (writer != null) {
-				writer.close();
-			}
 		}
 	}
 }

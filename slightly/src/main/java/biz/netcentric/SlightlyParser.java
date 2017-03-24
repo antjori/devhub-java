@@ -169,8 +169,11 @@ public class SlightlyParser {
 	}
 
 	/**
-	 *
+	 * Processes a node in order to validate the existence of data-for-x or
+	 * data-if attributes and $-expressions.
+	 * 
 	 * @param node
+	 *            the HTML node to process
 	 */
 	private void processNode(final Node node) {
 		List<String> attrsToRemove = new ArrayList<>();
@@ -180,6 +183,7 @@ public class SlightlyParser {
 			// process data-for-x
 			Collection<? extends Object> collection = processDataForX(attribute);
 
+			// renders the element once for every item in the collection
 			if (collection != null) {
 				String variableName = attribute.getKey().replaceFirst(SlightlyParserUtil.DATA_FOR_X, StringUtils.EMPTY);
 
@@ -191,6 +195,7 @@ public class SlightlyParser {
 					node.before(html);
 				});
 
+				// marks the current node for removal
 				nodesToRemove.add(node);
 			}
 
@@ -201,6 +206,7 @@ public class SlightlyParser {
 				if (result) {
 					attrsToRemove.add(attribute.getKey());
 				} else {
+					// marks the current node for removal
 					nodesToRemove.add(node);
 				}
 			}
@@ -215,9 +221,12 @@ public class SlightlyParser {
 	}
 
 	/**
-	 *
+	 * Processes the data-for-x attribute and executes the invocation associated
+	 * with it.
+	 * 
 	 * @param attribute
-	 * @return
+	 *            the attribute to process
+	 * @return a collection of elements taking into account the return
 	 */
 	private Collection<?> processDataForX(final Attribute attribute) {
 		Collection<?> collection = null;
@@ -239,9 +248,13 @@ public class SlightlyParser {
 	}
 
 	/**
-	 *
+	 * Processes the data-if attribute and executes the invocation associated
+	 * with it.
+	 * 
 	 * @param attribute
-	 * @return
+	 *            the attribute to process
+	 * @return the indication of whether should render the element in the normal
+	 *         way or not
 	 */
 	private Boolean processDataIf(final Attribute attribute) {
 		Boolean result = null;
@@ -263,8 +276,11 @@ public class SlightlyParser {
 	}
 
 	/**
-	 *
+	 * Processes the $-expressions and executes the invocation associated with
+	 * it. The attribute is updated with the result of the invocation.
+	 * 
 	 * @param attribute
+	 *            the attribute to process
 	 */
 	private void processDollarExpressions(final Attribute attribute) {
 		if (attribute != null) {
@@ -287,11 +303,16 @@ public class SlightlyParser {
 	}
 
 	/**
-	 *
+	 * Processes a method invocation by reflection taking into consideration the
+	 * instance name, the instance attribute and the type of method to invoke.
+	 * 
 	 * @param instanceName
+	 *            the instance name
 	 * @param instanceAttribute
+	 *            the instance attribute to invoke
 	 * @param type
-	 * @return
+	 *            the type of method
+	 * @return an object representative of the result of the invocation
 	 */
 	private Object processMethodInvocation(final String instanceName, final String instanceAttribute,
 			final MethodType type) {
