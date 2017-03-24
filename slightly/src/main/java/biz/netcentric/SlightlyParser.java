@@ -47,6 +47,9 @@ public class SlightlyParser {
 		GET, SET, IS;
 	}
 
+	/**
+	 * Initialization of the $-expression pattern.
+	 */
 	static {
 		dollarExpressionPattern = Pattern.compile(SlightlyParserUtil.DOLLAR_EXPRESSION_PATTERN);
 	}
@@ -73,6 +76,12 @@ public class SlightlyParser {
 		}
 	}
 
+	/**
+	 * Executes the parse of the HTML template file.
+	 *
+	 * @return a string representing the content to be displayed on the browser
+	 *         after the HTML template file has been parsed
+	 */
 	public String parse() {
 
 		if (request.getParameterMap().isEmpty()) {
@@ -92,15 +101,10 @@ public class SlightlyParser {
 			@Override
 			public void tail(Node node, int depth) {
 				// Do nothing
-				LOGGER.info("Exiting tag: " + node.nodeName());
 			}
 
 			@Override
 			public void head(Node node, int depth) {
-				LOGGER.info("Entering tag: " + node.nodeName());
-				LOGGER.warn(node.nodeName() + ": " + node.toString());
-				LOGGER.error(node.nodeName() + " depth: " + depth);
-
 				processNode(node);
 			}
 		});
@@ -164,6 +168,10 @@ public class SlightlyParser {
 		return result;
 	}
 
+	/**
+	 *
+	 * @param node
+	 */
 	private void processNode(final Node node) {
 		List<String> attrsToRemove = new ArrayList<>();
 
@@ -206,6 +214,11 @@ public class SlightlyParser {
 		attrsToRemove.forEach(attributeKey -> node.removeAttr(attributeKey));
 	}
 
+	/**
+	 *
+	 * @param attribute
+	 * @return
+	 */
 	private Collection<?> processDataForX(final Attribute attribute) {
 		Collection<?> collection = null;
 
@@ -225,6 +238,11 @@ public class SlightlyParser {
 		return collection;
 	}
 
+	/**
+	 *
+	 * @param attribute
+	 * @return
+	 */
 	private Boolean processDataIf(final Attribute attribute) {
 		Boolean result = null;
 
@@ -244,6 +262,10 @@ public class SlightlyParser {
 		return result;
 	}
 
+	/**
+	 *
+	 * @param attribute
+	 */
 	private void processDollarExpressions(final Attribute attribute) {
 		if (attribute != null) {
 			String attrValue = attribute.getValue();
@@ -264,6 +286,13 @@ public class SlightlyParser {
 		}
 	}
 
+	/**
+	 *
+	 * @param instanceName
+	 * @param instanceAttribute
+	 * @param type
+	 * @return
+	 */
 	private Object processMethodInvocation(final String instanceName, final String instanceAttribute,
 			final MethodType type) {
 		Object result = null;
