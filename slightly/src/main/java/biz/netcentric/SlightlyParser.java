@@ -29,6 +29,9 @@ import org.jsoup.select.NodeVisitor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Class responsible for the parsing and evaluation of the HTML template file.
+ */
 public class SlightlyParser {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(SlightlyParser.class);
@@ -36,7 +39,6 @@ public class SlightlyParser {
 	private static Document document;
 	private static Pattern dollarExpressionPattern;
 
-	private HttpServletRequest request;
 	private Map<String, Object> instanceMap;
 	private List<Node> nodesToRemove;
 
@@ -55,41 +57,39 @@ public class SlightlyParser {
 	}
 
 	/**
-	 * Constructor of this class.
-	 *
-	 * @param request
-	 *            the HTTP servlet request
-	 * @throws IOException
-	 *             if an error occurs while parsing the HTML document
+	 * Default constructor of this class.
 	 */
-	public SlightlyParser(final HttpServletRequest request) throws IOException {
-		setRequest(request);
-
-		setInstanceMap(new TreeMap<>());
-
-		setNodesToRemove(new ArrayList<>());
-
-		if (document == null) {
-			String path = request.getServletContext().getRealPath("index.html");
-
-			document = Jsoup.parse(new File(path), SlightlyParserUtil.ENCODING);
-		}
+	public SlightlyParser() {
+		this.instanceMap = new TreeMap<>();
+		this.nodesToRemove = new ArrayList<>();
 	}
 
 	/**
 	 * Executes the parse of the HTML template file.
 	 *
+	 * @param request
+	 *            the HTTP servlet request
 	 * @return a string representing the content to be displayed on the browser
 	 *         after the HTML template file has been parsed
+	 * @throws IOException
+	 *             if an error occurs while parsing the HTML document
 	 */
-	public String parse() {
+	public String parse(final HttpServletRequest request) {
 
-		if (request.getParameterMap().isEmpty()) {
-			return StringUtils.EMPTY;
+		if (document == null) {
+			String path = request.getServletContext().getRealPath("index.html");
+
+			try {
+				document = Jsoup.parse(new File(path), SlightlyParserUtil.ENCODING);
+			} catch (IOException ioe) {
+				LOGGER.error("An error occurred while parsing the HTML of the template file", ioe);
+
+				return StringUtils.EMPTY;
+			}
 		}
 
 		// builds map of Java instances from the script element
-		buildInstanceMap();
+		buildInstanceMap(request);
 
 		// removes the script element
 		Document newDocument = document.clone();
@@ -118,11 +118,11 @@ public class SlightlyParser {
 	/**
 	 * Builds a map containing all Java instances created during the evaluation
 	 * of the script element.
-	 *
+	 * 
 	 * @param request
 	 *            the HTTP servlet request
 	 */
-	private void buildInstanceMap() {
+	private void buildInstanceMap(final HttpServletRequest request) {
 		Elements script = document.getElementsByTag(SlightlyParserUtil.SCRIPT);
 
 		if (script.hasAttr(SlightlyParserUtil.SCRIPT_TYPE)
@@ -131,7 +131,7 @@ public class SlightlyParser {
 
 			try {
 				engine.eval(SlightlyParserUtil.ENABLE_RHINO);
-				engine.put(SlightlyParserUtil.HTTP_REQUEST, this.request);
+				engine.put(SlightlyParserUtil.HTTP_REQUEST, request);
 				engine.eval(script.first().html());
 
 				engine.getBindings(ScriptContext.ENGINE_SCOPE).keySet().forEach(key -> {
@@ -181,23 +181,7 @@ public class SlightlyParser {
 		// checks each attribute
 		node.attributes().forEach(attribute -> {
 			// process data-for-x
-			Collection<? extends Object> collection = processDataForX(attribute);
-
-			// renders the element once for every item in the collection
-			if (collection != null) {
-				String variableName = attribute.getKey().replaceFirst(SlightlyParserUtil.DATA_FOR_X, StringUtils.EMPTY);
-
-				collection.forEach(object -> {
-					Node newNode = node.clone();
-					newNode.removeAttr(attribute.getKey());
-					String html = newNode.toString().replace(
-							String.format(SlightlyParserUtil.DATA_FOR_X_PATTERN, variableName), object.toString());
-					node.before(html);
-				});
-
-				// marks the current node for removal
-				nodesToRemove.add(node);
-			}
+			processDataForX(node, attribute);
 
 			// process data-if
 			Boolean result = processDataIf(attribute);
@@ -228,23 +212,46 @@ public class SlightlyParser {
 	 *            the attribute to process
 	 * @return a collection of elements taking into account the return
 	 */
-	private Collection<?> processDataForX(final Attribute attribute) {
-		Collection<?> collection = null;
+	private void processDataForX(final Node node, final Attribute attribute) {
 
-		if (attribute != null && attribute.getKey().startsWith(SlightlyParserUtil.DATA_FOR_X)) {
+		if ((attribute != null) && attribute.getKey().startsWith(SlightlyParserUtil.DATA_FOR_X)) {
 			String[] javaElems = attribute.getValue().split("\\.");
 
-			if (javaElems.length >= 2 && instanceMap.containsKey(javaElems[0])) {
+			if (javaElems.length >= 2) {
 				String javaElem = javaElems[0];
 				String javaAttr = javaElems[1];
 
-				if (instanceMap.containsKey(javaElem)) {
-					collection = (Collection<?>) processMethodInvocation(javaElem, javaAttr, MethodType.GET);
+				// marks the current node for removal
+				nodesToRemove.add(node);
+
+				// validates the case when the data-for-x attribute exists but
+				// the javascript expression, in the current javascript state,
+				// cannot be evaluated
+				if (!instanceMap.containsKey(javaElem)) {
+					Node newNode = node.clone();
+					newNode.removeAttr(attribute.getKey());
+					node.before(newNode.toString());
+
+					return;
+				}
+
+				Collection<?> collection = (Collection<?>) processMethodInvocation(javaElem, javaAttr, MethodType.GET);
+
+				// renders the element once for every item in the collection
+				if (collection != null) {
+					String variableName = attribute.getKey().replaceFirst(SlightlyParserUtil.DATA_FOR_X,
+							StringUtils.EMPTY);
+
+					collection.forEach(object -> {
+						Node newNode = node.clone();
+						newNode.removeAttr(attribute.getKey());
+						String html = newNode.toString().replace(
+								String.format(SlightlyParserUtil.DATA_FOR_X_PATTERN, variableName), object.toString());
+						node.before(html);
+					});
 				}
 			}
 		}
-
-		return collection;
 	}
 
 	/**
@@ -266,9 +273,14 @@ public class SlightlyParser {
 				String javaElem = javaElems[0];
 				String javaAttr = javaElems[1];
 
-				if (instanceMap.containsKey(javaElem)) {
-					result = (boolean) processMethodInvocation(javaElem, javaAttr, MethodType.IS);
+				// validates the case when the data-if attribute exists but
+				// the javascript expression, in the current javascript state,
+				// cannot be evaluated
+				if (!instanceMap.containsKey(javaElem)) {
+					return false;
 				}
+
+				result = (boolean) processMethodInvocation(javaElem, javaAttr, MethodType.IS);
 			}
 		}
 
@@ -330,21 +342,6 @@ public class SlightlyParser {
 		}
 
 		return result;
-	}
-
-	/**
-	 * @return the request
-	 */
-	public HttpServletRequest getRequest() {
-		return request;
-	}
-
-	/**
-	 * @param request
-	 *            the request to set
-	 */
-	public void setRequest(HttpServletRequest request) {
-		this.request = request;
 	}
 
 	/**

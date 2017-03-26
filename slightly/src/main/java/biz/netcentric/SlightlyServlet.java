@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,13 +34,18 @@ public class SlightlyServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		SlightlyParser parser = new SlightlyParser(request);
-		String responseContent = parser.parse();
+		String responseContent = StringUtils.EMPTY;
+
+		if ((request.getParameterMap() != null) && (!request.getParameterMap().isEmpty())) {
+			SlightlyParser parser = new SlightlyParser();
+
+			responseContent = parser.parse(request);	
+		}
 
 		try (PrintWriter writer = response.getWriter()) {
 			writer.println(responseContent);
-		} catch (IOException e) {
-			LOGGER.error("An error occurred while writing servlet response", e);
+		} catch (IOException ioe) {
+			LOGGER.error("An error occurred while writing servlet response", ioe);
 		}
 	}
 }

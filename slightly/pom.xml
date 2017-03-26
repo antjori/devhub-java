@@ -30,8 +30,11 @@
 		<javaee-api.version>7.0</javaee-api.version>
 		<javax.servlet-api.version>3.1.0</javax.servlet-api.version>
 		<jsoup.version>1.10.2</jsoup.version>
+		<junit.version>4.12</junit.version>
 		<logback-classic.version>1.2.1</logback-classic.version>
 		<logback-core.version>1.2.1</logback-core.version>
+		<mockito-core.version>1.10.19</mockito-core.version>
+		<powermock.version>1.6.6</powermock.version>
 		<slf4j-api.version>1.7.24</slf4j-api.version>
 	</properties>
 
@@ -112,6 +115,36 @@
 				<artifactId>logback-core</artifactId>
 				<version>${logback-core.version}</version>
 			</dependency>
+
+			<!-- testing -->
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-core</artifactId>
+				<version>${mockito-core.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.powermock</groupId>
+				<artifactId>powermock-module-junit4</artifactId>
+				<version>${powermock.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+            <dependency>
+                <groupId>org.powermock</groupId>
+                <artifactId>powermock-api-mockito</artifactId>
+                <version>${powermock.version}</version>
+                <scope>test</scope>
+            </dependency>
+
 		</dependencies>
 	</dependencyManagement>
 
@@ -157,17 +190,25 @@
 			<artifactId>logback-core</artifactId>
 		</dependency>
 
-        <!-- testing -->
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <scope>test</scope>
-        </dependency>
+		<!-- testing -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-module-junit4</artifactId>
+		</dependency>
 
         <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-core</artifactId>
-            <scope>test</scope>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-api-mockito</artifactId>
         </dependency>
 	</dependencies>
 
