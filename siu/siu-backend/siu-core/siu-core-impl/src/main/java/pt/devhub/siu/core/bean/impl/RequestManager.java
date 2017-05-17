@@ -6,7 +6,6 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 
-import pt.devhub.siu.common.response.IResponse;
 import pt.devhub.siu.core.bean.api.IRequestManager;
 import us.monoid.web.JSONResource;
 import us.monoid.web.Resty;
@@ -32,7 +31,7 @@ public abstract class RequestManager implements IRequestManager {
 
 	/**
 	 * Executes the REST service call.
-	 * 
+	 *
 	 * @param uri
 	 *            the URI to get
 	 * @throws IOException
@@ -46,7 +45,7 @@ public abstract class RequestManager implements IRequestManager {
 
 	/**
 	 * Verifies if the REST call was successful.
-	 * 
+	 *
 	 * @return the state of the REST call
 	 */
 	protected boolean restCallSuccessful() {
@@ -55,7 +54,7 @@ public abstract class RequestManager implements IRequestManager {
 
 	/**
 	 * Attains a parameter from the JSON object given a specific key.
-	 * 
+	 *
 	 * @param key
 	 *            the parameter key
 	 * @return the parameter associated with the specified key
@@ -74,8 +73,4 @@ public abstract class RequestManager implements IRequestManager {
 		this.jsonResource = null;
 	}
 
-	/**
-	 * Declaration of the abstract method that executes the request processing.
-	 */
-	public abstract IResponse processRequest();
 }

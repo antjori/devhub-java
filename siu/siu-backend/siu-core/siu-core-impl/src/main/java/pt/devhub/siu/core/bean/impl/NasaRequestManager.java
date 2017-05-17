@@ -34,7 +34,7 @@ public class NasaRequestManager extends RequestManager {
 	public IResponse processRequest() {
 		logger.info("Received a request and forwarding it to NASA's APOD service");
 
-		NasaResponseBuilder responseBuilder = null;
+		IResponse response = null;
 
 		try {
 			String url = StringUtils.EMPTY;
@@ -49,25 +49,24 @@ public class NasaRequestManager extends RequestManager {
 
 				logger.info("NASA's picture of the day URL: " + url);
 
-				responseBuilder = new NasaResponseBuilder(url);
-
 				title = getParameter("title");
 				mediaType = getParameter("media_type");
 				explanation = getParameter("explanation");
 			}
 
-			responseBuilder = new NasaResponseBuilder(url);
+			NasaResponseBuilder responseBuilder = new NasaResponseBuilder(url);
 			responseBuilder.setTitle(title);
 			responseBuilder.setMediaType(mediaType);
 			responseBuilder.setExplanation(explanation);
 
+			response = responseBuilder.build();
 		} catch (Exception e) {
 			logger.error("An error occurred during request processing", e);
 		} finally {
 			invalidateRestCall();
 		}
 
-		return responseBuilder.build();
+		return response;
 	}
 
 }

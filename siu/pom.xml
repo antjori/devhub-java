@@ -36,7 +36,7 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 
-		<!-- plugin versions -->
+		<!-- plug-in versions -->
 		<maven-assembly-plugin.version>2.6</maven-assembly-plugin.version>
 		<maven-clean-plugin.version>2.6.1</maven-clean-plugin.version>
 		<maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
@@ -57,6 +57,7 @@
 		<junit.version>4.12</junit.version>
 		<logback-classic.version>1.1.3</logback-classic.version>
 		<logback-core.version>1.1.3</logback-core.version>
+		<lombok.version>1.16.16</lombok.version>
 		<org.glassfish.javax.faces.version>2.2.12</org.glassfish.javax.faces.version>
 		<org.richfaces.version>4.5.10.Final</org.richfaces.version>
 		<slf4j-api.version>1.7.12</slf4j-api.version>
@@ -128,6 +129,13 @@
 				<version>${logback-core.version}</version>
 			</dependency>
 
+			<!-- Lombok -->
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>${lombok.version}</version>
+			</dependency>
+
 			<!-- Rest -->
 			<dependency>
 				<groupId>us.monoid.web</groupId>
@@ -150,6 +158,12 @@
 			<groupId>javax</groupId>
 			<artifactId>javaee-api</artifactId>
 			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<!--scope>provided</scope-->
 		</dependency>
 
 		<!-- Logging -->

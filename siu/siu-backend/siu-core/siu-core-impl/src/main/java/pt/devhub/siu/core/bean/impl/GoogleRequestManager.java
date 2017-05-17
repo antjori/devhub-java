@@ -34,7 +34,7 @@ public class GoogleRequestManager extends RequestManager {
 		IResponse response = null;
 
 		try {
-			ObjectMapper mapper = null;
+			ObjectMapper mapper;
 			ApiDiscovery apiDiscovery = null;
 
 			executeRestCall(API_DISCOVERY_REQUEST);

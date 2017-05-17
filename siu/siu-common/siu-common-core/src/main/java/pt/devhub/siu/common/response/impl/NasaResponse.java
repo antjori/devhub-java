@@ -1,5 +1,6 @@
 package pt.devhub.siu.common.response.impl;
 
+import lombok.Getter;
 import pt.devhub.siu.common.response.IResponse;
 
 /**
@@ -15,23 +16,30 @@ public class NasaResponse implements IResponse {
 	/**
 	 * NASA's picture of the day URL.
 	 */
+	@Getter
 	private final String podUrl;
+
 	/**
 	 * NASA's picture of the day title.
 	 */
+	@Getter
 	private final String title;
+
 	/**
 	 * NASA's picture of the day mediaType.
 	 */
+	@Getter
 	private final String mediaType;
+
 	/**
 	 * NASA's picture of the day explanation.
 	 */
+	@Getter
 	private final String explanation;
 
 	/**
 	 * Constructor for this class.
-	 * 
+	 *
 	 * @param builder
 	 *            the builder class
 	 */
@@ -40,34 +48,6 @@ public class NasaResponse implements IResponse {
 		this.title = builder.title;
 		this.mediaType = builder.mediaType;
 		this.explanation = builder.explanation;
-	}
-
-	/**
-	 * @return the podUrl
-	 */
-	public String getPodUrl() {
-		return podUrl;
-	}
-
-	/**
-	 * @return the title
-	 */
-	public String getTitle() {
-		return title;
-	}
-
-	/**
-	 * @return the mediaType
-	 */
-	public String getMediaType() {
-		return mediaType;
-	}
-
-	/**
-	 * @return the explanation
-	 */
-	public String getExplanation() {
-		return explanation;
 	}
 
 	/**
@@ -94,7 +74,7 @@ public class NasaResponse implements IResponse {
 
 		/**
 		 * Default builder constructor.
-		 * 
+		 *
 		 * @param podUrl
 		 *            NASA's picture of the day URL
 		 */
@@ -104,7 +84,7 @@ public class NasaResponse implements IResponse {
 
 		/**
 		 * Sets NASA's picture of the day title.
-		 * 
+		 *
 		 * @param title
 		 *            NASA's picture of the day title
 		 * @return this builder
@@ -117,7 +97,7 @@ public class NasaResponse implements IResponse {
 
 		/**
 		 * Sets NASA's picture of the day mediaType.
-		 * 
+		 *
 		 * @param mediaType
 		 *            NASA's picture of the day mediaType
 		 * @return this builder
@@ -130,7 +110,7 @@ public class NasaResponse implements IResponse {
 
 		/**
 		 * Sets NASA's picture of the day explanation.
-		 * 
+		 *
 		 * @param explanation
 		 *            NASA's picture of the day explanation.
 		 * @return this builder
@@ -144,7 +124,7 @@ public class NasaResponse implements IResponse {
 		/**
 		 * Creates a new instance of the NasaResponse class in accordance with
 		 * the builder pattern.
-		 * 
+		 *
 		 * @return a new instance of the NasaResponse class
 		 */
 		public NasaResponse build() {

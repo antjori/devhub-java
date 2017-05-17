@@ -1,5 +1,6 @@
 package pt.devhub.siu.common.response.impl;
 
+import lombok.Getter;
 import pt.devhub.siu.common.response.IResponse;
 import pt.devhub.siu.common.response.ext.google.ApiDiscovery;
 
@@ -14,22 +15,17 @@ public class GoogleResponse implements IResponse {
 	 */
 	private static final long serialVersionUID = -1787321855957854846L;
 
+	@Getter
 	private ApiDiscovery apiDiscovery;
 
 	/**
 	 * Default constructor of this class.
-	 * 
-	 * @param apiDiscovery the API discovery
+	 *
+	 * @param apiDiscovery
+	 *            the API discovery
 	 */
 	public GoogleResponse(final ApiDiscovery apiDiscovery) {
 		this.apiDiscovery = apiDiscovery;
-	}
-
-	/**
-	 * @return the apiDiscovery
-	 */
-	public ApiDiscovery getApiDiscovery() {
-		return apiDiscovery;
 	}
 
 }
