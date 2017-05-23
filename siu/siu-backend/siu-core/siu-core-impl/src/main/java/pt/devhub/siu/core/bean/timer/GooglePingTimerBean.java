@@ -20,11 +20,13 @@ public class GooglePingTimerBean {
 	@Schedule(second = "*/10", minute = "*", hour = "*", persistent = false)
 	public void atSchedule() {
 		logger.info("Triggered scheduler for Google ping...");
+
 		try {
 			logger.info("Is Google alive? " + InetAddress.getByName("www.google.com").isReachable(2000));
 		} catch (IOException e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage(), e);
 		}
+
 		logger.info("Finished scheduler for Google ping!");
 	}
 }

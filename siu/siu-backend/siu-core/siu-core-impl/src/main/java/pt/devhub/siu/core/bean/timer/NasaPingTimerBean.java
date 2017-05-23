@@ -37,11 +37,13 @@ public class NasaPingTimerBean {
 	@Timeout
 	public void execute(final Timer timer) {
 		logger.info("Triggered scheduler for Nasa ping...");
+
 		try {
 			logger.info("Is Nasa alive? " + InetAddress.getByName("www.nasa.gov").isReachable(1000));
 		} catch (IOException e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage(), e);
 		}
+
 		logger.info("Finished scheduler for Nasa ping!");
 	}
 }
