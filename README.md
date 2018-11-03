@@ -1,6 +1,6 @@
 # amun
 
-The repository for all Java related projects.
+The repository for all Java only related projects.
 
 <p>Projects developed:</p>
 
