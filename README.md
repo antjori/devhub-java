@@ -1,4 +1,4 @@
-# amun
+# Java @ DevHub
 
 The repository for all Java only related projects.
 
