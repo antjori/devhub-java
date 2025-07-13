@@ -52,7 +52,7 @@
         <jsonschema2pojo.version>0.4.16</jsonschema2pojo.version>
 
         <!-- dependency versions -->
-        <commons-lang3.version>3.4</commons-lang3.version>
+        <commons-lang3.version>3.18.0</commons-lang3.version>
         <jackson-databind.version>2.13.4.2</jackson-databind.version>
         <javaee-api.version>7.0</javaee-api.version>
         <junit.version>4.13.1</junit.version>
