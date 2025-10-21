@@ -57,7 +57,7 @@
         <javaee-api.version>7.0</javaee-api.version>
         <junit.version>4.13.1</junit.version>
         <logback-classic.version>1.2.13</logback-classic.version>
-        <logback-core.version>1.5.13</logback-core.version>
+        <logback-core.version>1.5.19</logback-core.version>
         <lombok.version>1.16.16</lombok.version>
         <org.glassfish.javax.faces.version>2.3.7</org.glassfish.javax.faces.version>
         <org.richfaces.version>4.5.10.Final</org.richfaces.version>
